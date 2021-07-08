@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-  <persistence-unit name="default">
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Masterofthehunter</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Result</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Account</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Cull</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Animal</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Address</class>
-  </persistence-unit>
+    <persistence-unit name="HuntingJavaDB_PU" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:app/jdbc/HuntingJDBCJavaDB</jta-data-source>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Masterofthehunter</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Result</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Account</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Cull</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Address</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <!--     Wartość DISABLE_SELECTIVE oznacza, że cache L2 będzie buforował wszystkie encje poza tymi oznaczonymi adnotacją @Cacheable(false).
+        Tu dotyczy to encji Zamowienie i Produkt, które są modyfikowane z poziomu dodatkowej jednostki składowania. -->
+        <shared-cache-mode>NONE</shared-cache-mode>
+        <validation-mode>NONE</validation-mode>
+        <properties>
+            <!--         Wartość poniższej właściwości jest nazwą subpakietu, w którym generowane są klasy metamodelu dla tej jednostki składowania.
+            Dzięki temu nie ma konfliktu pomiędzy klasami metamodelu generowanymi przez różne jednostki składowania. -->
+            <property name="eclipselink.canonicalmodel.subpackage" value="HuntingJavaDB_PU"/>
+            <!--       Wartość create oznacza, że struktura tabel bazy zostanie utworzona przy pierwszym uruchomieniu aplikacji, a później nie będzie zmieniana.
+            Jeżeli następują zmiany w klasach encyjnych, należy ręcznie usunąć tabele z bazy, lub zmienić wartość na drop-and-create -->
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+            <!-- <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> -->
+            <property name="eclipselink.logging.level" value="FINE"/>
+        </properties>
+    </persistence-unit>
+    <!-- Dodatkowa jednostka składowania umożliwiająca działanie z innym poziomem izolacji transakcji. -->
+    <persistence-unit name="HuntingJavaDB_PU_Serializable" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:app/jdbc/huntingJDBCJavaDB_Serializable</jta-data-source>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Masterofthehunter</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Result</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Account</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Cull</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter</class>
+        <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Address</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <!--     Ustawienie to powoduje, że jednostka nie używa cache L2. Jest to potrzebne, aby uniknąć niezgodności
+        stanu encji ze zmianami wprowadzanymi przez podstawową jednostke składowania. -->
+        <shared-cache-mode>NONE</shared-cache-mode>
+        <validation-mode>NONE</validation-mode>
+        <properties>
+            <!--         Wartość poniższej właściwości jest nazwą subpakietu, w którym generowane są klasy metamodelu dla tej jednostki składowania.
+            Dzięki temu nie ma konfliktu pomiędzy klasami metamodelu generowanymi przez różne jednostki składowania. -->
+            <property name="eclipselink.canonicalmodel.subpackage" value="HuntingJavaDB_PU_Serializable"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <!-- W tej jednostce składowania wyłączono generowanie struktur w bazie danych. Inaczej tworzenie byłoby zdublowane. -->
+        </properties>
+    </persistence-unit>
 </persistence>

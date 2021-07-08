@@ -3,56 +3,52 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 
 @Entity
-@Table(name = "result")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Result.findAll", query = "SELECT r FROM Result r"),
-    @NamedQuery(name = "Result.findById", query = "SELECT r FROM Result r WHERE r.id = :id"),
-    @NamedQuery(name = "Result.findByShootingTime", query = "SELECT r FROM Result r WHERE r.shootingTime = :shootingTime"),
-    @NamedQuery(name = "Result.findByIsPrivateUse", query = "SELECT r FROM Result r WHERE r.isPrivateUse = :isPrivateUse"),
-    @NamedQuery(name = "Result.findByTypeOfResult", query = "SELECT r FROM Result r WHERE r.typeOfResult = :typeOfResult")})
+@Table(name = "Result")
 public class Result implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "shooting_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date shootingTime;
+
     @Column(name = "is_private_use")
     private Boolean isPrivateUse;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "type_of_result")
-    private String typeOfResult;
-    @JoinColumn(name = "animal_id", referencedColumnName = "id")
-    @ManyToOne
-    private Animal animalId;
+    @Enumerated(EnumType.STRING)
+    private TypeOfResult typeOfResult;
+
+    @Column(name = "animal_type")
+    @Enumerated(EnumType.STRING)
+    private AnimalType animalType;
+
+    @Column(name = "animal_weight")
+    private int animalWeight;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resultId")
     private Collection<Hunt> huntCollection;
 
@@ -63,10 +59,19 @@ public class Result implements Serializable {
         this.id = id;
     }
 
-    public Result(Long id, Date shootingTime, String typeOfResult) {
+    public Result(Long id, Date shootingTime, TypeOfResult typeOfResult) {
         this.id = id;
         this.shootingTime = shootingTime;
         this.typeOfResult = typeOfResult;
+    }
+
+    public Result(Long id, Date shootingTime, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
+        this.id = id;
+        this.shootingTime = shootingTime;
+        this.isPrivateUse = isPrivateUse;
+        this.typeOfResult = typeOfResult;
+        this.animalType = animalType;
+        this.animalWeight = animalWeight;
     }
 
     public Long getId() {
@@ -93,23 +98,30 @@ public class Result implements Serializable {
         this.isPrivateUse = isPrivateUse;
     }
 
-    public String getTypeOfResult() {
+    public TypeOfResult getTypeOfResult() {
         return typeOfResult;
     }
 
-    public void setTypeOfResult(String typeOfResult) {
+    public void setTypeOfResult(TypeOfResult typeOfResult) {
         this.typeOfResult = typeOfResult;
     }
 
-    public Animal getAnimalId() {
-        return animalId;
+    public AnimalType getAnimalType() {
+        return animalType;
     }
 
-    public void setAnimalId(Animal animalId) {
-        this.animalId = animalId;
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
     }
 
-    @XmlTransient
+    public int getAnimalWeight() {
+        return animalWeight;
+    }
+
+    public void setAnimalWeight(int animalWeight) {
+        this.animalWeight = animalWeight;
+    }
+
     public Collection<Hunt> getHuntCollection() {
         return huntCollection;
     }

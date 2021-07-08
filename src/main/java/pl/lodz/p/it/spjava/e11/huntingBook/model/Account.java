@@ -3,104 +3,93 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "Account")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
-    @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id"),
-    @NamedQuery(name = "Account.findByLogin", query = "SELECT a FROM Account a WHERE a.login = :login"),
-    @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
-    @NamedQuery(name = "Account.findByIsActive", query = "SELECT a FROM Account a WHERE a.isActive = :isActive"),
-    @NamedQuery(name = "Account.findByName", query = "SELECT a FROM Account a WHERE a.name = :name"),
-    @NamedQuery(name = "Account.findBySurname", query = "SELECT a FROM Account a WHERE a.surname = :surname"),
-    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email = :email"),
-    @NamedQuery(name = "Account.findByType", query = "SELECT a FROM Account a WHERE a.type = :type"),
-    @NamedQuery(name = "Account.findByVersion", query = "SELECT a FROM Account a WHERE a.version = :version"),
-    @NamedQuery(name = "Account.findByCreationTimestamp", query = "SELECT a FROM Account a WHERE a.creationTimestamp = :creationTimestamp"),
-    @NamedQuery(name = "Account.findByModificationTimestamp", query = "SELECT a FROM Account a WHERE a.modificationTimestamp = :modificationTimestamp")})
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "login")
     private String login;
+
     @Size(max = 100)
     @Column(name = "password")
     private String password;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "isActive")
     private boolean isActive;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "surname")
     private String surname;
+
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
+
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "type")
     private String type;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "version")
     private int version;
+
     @Column(name = "creation_timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTimestamp;
+
     @Column(name = "modification_timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modificationTimestamp;
+
     @JoinColumn(name = "administrator_id", referencedColumnName = "id")
     @ManyToOne
     private Administrator administratorId;
+
     @JoinColumn(name = "hunter_id", referencedColumnName = "id")
     @ManyToOne
     private Hunter hunterId;
+
     @JoinColumn(name = "master_of_the_hunter_id", referencedColumnName = "id")
     @ManyToOne
     private Masterofthehunter masterOfTheHunterId;
+
     @OneToMany(mappedBy = "accountId")
     private Collection<Hunter> hunterCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Collection<Administrator> administratorCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private Collection<Masterofthehunter> masterofthehunterCollection;
 
@@ -234,7 +223,6 @@ public class Account implements Serializable {
         this.masterOfTheHunterId = masterOfTheHunterId;
     }
 
-    @XmlTransient
     public Collection<Hunter> getHunterCollection() {
         return hunterCollection;
     }
@@ -243,7 +231,6 @@ public class Account implements Serializable {
         this.hunterCollection = hunterCollection;
     }
 
-    @XmlTransient
     public Collection<Administrator> getAdministratorCollection() {
         return administratorCollection;
     }
@@ -252,7 +239,6 @@ public class Account implements Serializable {
         this.administratorCollection = administratorCollection;
     }
 
-    @XmlTransient
     public Collection<Masterofthehunter> getMasterofthehunterCollection() {
         return masterofthehunterCollection;
     }

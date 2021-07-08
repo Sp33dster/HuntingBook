@@ -3,62 +3,52 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
+import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
 
 @Entity
-@Table(name = "cull")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Cull.findAll", query = "SELECT c FROM Cull c"),
-    @NamedQuery(name = "Cull.findById", query = "SELECT c FROM Cull c WHERE c.id = :id"),
-    @NamedQuery(name = "Cull.findByStartDate", query = "SELECT c FROM Cull c WHERE c.startDate = :startDate"),
-    @NamedQuery(name = "Cull.findByEndDate", query = "SELECT c FROM Cull c WHERE c.endDate = :endDate"),
-    @NamedQuery(name = "Cull.findByAnimalNumber", query = "SELECT c FROM Cull c WHERE c.animalNumber = :animalNumber")})
+@Table(name = "Cull")
 public class Cull implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
-    @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Long id;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "animal_number")
-    private int animalNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Map<AnimalType, Integer> animalsTypeAndNumber;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cullId")
     private Collection<Hunter> hunterCollection;
+
     @JoinColumn(name = "hunter_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Hunter hunterId;
-    @JoinColumn(name = "animal_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Animal animalId;
 
     public Cull() {
     }
@@ -67,11 +57,11 @@ public class Cull implements Serializable {
         this.id = id;
     }
 
-    public Cull(Long id, Date startDate, Date endDate, int animalNumber) {
+    public Cull(Long id, Date startDate, Date endDate, Map<AnimalType, Integer> animalsTypeAndNumber) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.animalNumber = animalNumber;
+        this.animalsTypeAndNumber = animalsTypeAndNumber;
     }
 
     public Long getId() {
@@ -98,15 +88,14 @@ public class Cull implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getAnimalNumber() {
-        return animalNumber;
+    public Map<AnimalType, Integer> getAnimalsTypeAndNumber() {
+        return animalsTypeAndNumber;
     }
 
-    public void setAnimalNumber(int animalNumber) {
-        this.animalNumber = animalNumber;
+    public void setAnimalsTypeAndNumber(Map<AnimalType, Integer> animalsTypeAndNumber) {
+        this.animalsTypeAndNumber = animalsTypeAndNumber;
     }
 
-    @XmlTransient
     public Collection<Hunter> getHunterCollection() {
         return hunterCollection;
     }
@@ -121,14 +110,6 @@ public class Cull implements Serializable {
 
     public void setHunterId(Hunter hunterId) {
         this.hunterId = hunterId;
-    }
-
-    public Animal getAnimalId() {
-        return animalId;
-    }
-
-    public void setAnimalId(Animal animalId) {
-        this.animalId = animalId;
     }
 
     @Override
