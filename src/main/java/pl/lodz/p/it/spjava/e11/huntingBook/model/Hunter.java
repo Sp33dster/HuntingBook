@@ -15,9 +15,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Hunter")
-public class Hunter implements Serializable {
+public class Hunter extends Account implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @NotNull
     @Column(name = "id")
@@ -35,13 +34,6 @@ public class Hunter implements Serializable {
 
     @Column(name = "isHunting")
     private Boolean isHunting;
-
-    @OneToMany(mappedBy = "hunterId")
-    private Collection<Account> accountCollection;
-
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @ManyToOne
-    private Account accountId;
 
     @JoinColumn(name = "addres_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -104,22 +96,6 @@ public class Hunter implements Serializable {
 
     public void setIsHunting(Boolean isHunting) {
         this.isHunting = isHunting;
-    }
-
-    public Collection<Account> getAccountCollection() {
-        return accountCollection;
-    }
-
-    public void setAccountCollection(Collection<Account> accountCollection) {
-        this.accountCollection = accountCollection;
-    }
-
-    public Account getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
     }
 
     public Address getAddresId() {

@@ -3,12 +3,9 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,13 +14,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
 
 @Entity
 @Table(name = "Cull")
-public class Cull implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Cull extends AbstractEntity implements Serializable {
 
     @Id
     @NotNull
@@ -40,8 +34,8 @@ public class Cull implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @Enumerated(EnumType.STRING)
-    private Map<AnimalType, Integer> animalsTypeAndNumber;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cullId")
+    private Collection<CullDetails> cullCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cullId")
     private Collection<Hunter> hunterCollection;
@@ -57,11 +51,10 @@ public class Cull implements Serializable {
         this.id = id;
     }
 
-    public Cull(Long id, Date startDate, Date endDate, Map<AnimalType, Integer> animalsTypeAndNumber) {
+    public Cull(Long id, Date startDate, Date endDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.animalsTypeAndNumber = animalsTypeAndNumber;
     }
 
     public Long getId() {
@@ -86,14 +79,6 @@ public class Cull implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Map<AnimalType, Integer> getAnimalsTypeAndNumber() {
-        return animalsTypeAndNumber;
-    }
-
-    public void setAnimalsTypeAndNumber(Map<AnimalType, Integer> animalsTypeAndNumber) {
-        this.animalsTypeAndNumber = animalsTypeAndNumber;
     }
 
     public Collection<Hunter> getHunterCollection() {

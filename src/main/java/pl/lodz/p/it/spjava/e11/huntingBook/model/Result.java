@@ -22,7 +22,6 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 @Table(name = "Result")
 public class Result implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @NotNull
     @Column(name = "id")

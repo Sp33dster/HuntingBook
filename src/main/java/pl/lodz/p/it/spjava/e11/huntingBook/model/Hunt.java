@@ -17,9 +17,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Hunt")
-public class Hunt implements Serializable {
+public class Hunt extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @NotNull
     @Column(name = "id")
@@ -34,20 +33,6 @@ public class Hunt implements Serializable {
     @Column(name = "end_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
-
-    @NotNull
-    @Column(name = "version")
-    private int version;
-
-    @NotNull
-    @Column(name = "creation_timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationTimestamp;
-
-    @NotNull
-    @Column(name = "modification_timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modificationTimestamp;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "huntId")
     private Collection<Hunter> hunterCollection;
@@ -67,13 +52,10 @@ public class Hunt implements Serializable {
         this.id = id;
     }
 
-    public Hunt(Long id, Date startTime, Date endTime, int version, Date creationTimestamp, Date modificationTimestamp) {
+    public Hunt(Long id, Date startTime, Date endTime) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.version = version;
-        this.creationTimestamp = creationTimestamp;
-        this.modificationTimestamp = modificationTimestamp;
     }
 
     public Long getId() {
@@ -98,30 +80,6 @@ public class Hunt implements Serializable {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public Date getCreationTimestamp() {
-        return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
-    public Date getModificationTimestamp() {
-        return modificationTimestamp;
-    }
-
-    public void setModificationTimestamp(Date modificationTimestamp) {
-        this.modificationTimestamp = modificationTimestamp;
     }
 
     public Collection<Hunter> getHunterCollection() {

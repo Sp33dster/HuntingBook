@@ -1,26 +1,21 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
 @Entity
 @Table(name = "Account")
-public class Account implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Account extends AbstractEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @NotNull
     @Column(name = "id")
@@ -56,42 +51,8 @@ public class Account implements Serializable {
     private String email;
 
     @NotNull
-    @Size(min = 1, max = 30)
     @Column(name = "type")
-    private String type;
-
-    @NotNull
-    @Column(name = "version")
-    private int version;
-
-    @Column(name = "creation_timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationTimestamp;
-
-    @Column(name = "modification_timestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modificationTimestamp;
-
-    @JoinColumn(name = "administrator_id", referencedColumnName = "id")
-    @ManyToOne
-    private Administrator administratorId;
-
-    @JoinColumn(name = "hunter_id", referencedColumnName = "id")
-    @ManyToOne
-    private Hunter hunterId;
-
-    @JoinColumn(name = "master_of_the_hunter_id", referencedColumnName = "id")
-    @ManyToOne
-    private Masterofthehunter masterOfTheHunterId;
-
-    @OneToMany(mappedBy = "accountId")
-    private Collection<Hunter> hunterCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Collection<Administrator> administratorCollection;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
-    private Collection<Masterofthehunter> masterofthehunterCollection;
+    private AccountType type;
 
     public Account() {
     }
@@ -100,15 +61,15 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Account(Long id, String login, boolean isActive, String name, String surname, String email, String type, int version) {
+    public Account(Long id, String login, String password, boolean isActive, String name, String surname, String email, AccountType type) {
         this.id = id;
         this.login = login;
+        this.password = password;
         this.isActive = isActive;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.type = type;
-        this.version = version;
     }
 
     public Long getId() {
@@ -167,84 +128,12 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public String getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(AccountType type) {
         this.type = type;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public Date getCreationTimestamp() {
-        return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
-    public Date getModificationTimestamp() {
-        return modificationTimestamp;
-    }
-
-    public void setModificationTimestamp(Date modificationTimestamp) {
-        this.modificationTimestamp = modificationTimestamp;
-    }
-
-    public Administrator getAdministratorId() {
-        return administratorId;
-    }
-
-    public void setAdministratorId(Administrator administratorId) {
-        this.administratorId = administratorId;
-    }
-
-    public Hunter getHunterId() {
-        return hunterId;
-    }
-
-    public void setHunterId(Hunter hunterId) {
-        this.hunterId = hunterId;
-    }
-
-    public Masterofthehunter getMasterOfTheHunterId() {
-        return masterOfTheHunterId;
-    }
-
-    public void setMasterOfTheHunterId(Masterofthehunter masterOfTheHunterId) {
-        this.masterOfTheHunterId = masterOfTheHunterId;
-    }
-
-    public Collection<Hunter> getHunterCollection() {
-        return hunterCollection;
-    }
-
-    public void setHunterCollection(Collection<Hunter> hunterCollection) {
-        this.hunterCollection = hunterCollection;
-    }
-
-    public Collection<Administrator> getAdministratorCollection() {
-        return administratorCollection;
-    }
-
-    public void setAdministratorCollection(Collection<Administrator> administratorCollection) {
-        this.administratorCollection = administratorCollection;
-    }
-
-    public Collection<Masterofthehunter> getMasterofthehunterCollection() {
-        return masterofthehunterCollection;
-    }
-
-    public void setMasterofthehunterCollection(Collection<Masterofthehunter> masterofthehunterCollection) {
-        this.masterofthehunterCollection = masterofthehunterCollection;
     }
 
     @Override

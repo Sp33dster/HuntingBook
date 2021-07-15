@@ -1,22 +1,17 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Master_of_the_hunter")
-public class Masterofthehunter implements Serializable {
+public class MasterOfTheHunter extends Account implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @NotNull
     @Column(name = "id")
@@ -27,21 +22,14 @@ public class Masterofthehunter implements Serializable {
     @Column(name = "contact_number")
     private String contactNumber;
 
-    @OneToMany(mappedBy = "masterOfTheHunterId")
-    private Collection<Account> accountCollection;
-
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Account accountId;
-
-    public Masterofthehunter() {
+    public MasterOfTheHunter() {
     }
 
-    public Masterofthehunter(Long id) {
+    public MasterOfTheHunter(Long id) {
         this.id = id;
     }
 
-    public Masterofthehunter(Long id, String contactNumber) {
+    public MasterOfTheHunter(Long id, String contactNumber) {
         this.id = id;
         this.contactNumber = contactNumber;
     }
@@ -62,22 +50,6 @@ public class Masterofthehunter implements Serializable {
         this.contactNumber = contactNumber;
     }
 
-    public Collection<Account> getAccountCollection() {
-        return accountCollection;
-    }
-
-    public void setAccountCollection(Collection<Account> accountCollection) {
-        this.accountCollection = accountCollection;
-    }
-
-    public Account getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Account accountId) {
-        this.accountId = accountId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -88,10 +60,10 @@ public class Masterofthehunter implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Masterofthehunter)) {
+        if (!(object instanceof MasterOfTheHunter)) {
             return false;
         }
-        Masterofthehunter other = (Masterofthehunter) object;
+        MasterOfTheHunter other = (MasterOfTheHunter) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import javax.annotation.sql.DataSourceDefinition;
 import javax.annotation.sql.DataSourceDefinitions;
 @DataSourceDefinitions ({
-@DataSourceDefinition( // Ta pula po³¹czeñ jest na potrzeby operacji realizowanych przez modu³ aplikacji
+@DataSourceDefinition( 
         name = "java:app/jdbc/HuntingJDBCJavaDB",
         className = "org.apache.derby.jdbc.ClientDataSource",
         user = "hunter",
@@ -15,7 +15,7 @@ import javax.annotation.sql.DataSourceDefinitions;
         transactional = true,
         isolationLevel = Connection.TRANSACTION_READ_COMMITTED)
 ,
-@DataSourceDefinition( // Ta pula po³¹czeñ jest na potrzeby operacji realizowanych przez modu³ aplikacji
+@DataSourceDefinition( 
         name = "java:app/jdbc/HuntingJDBCJavaDB_Serializable",
         className = "org.apache.derby.jdbc.ClientDataSource",
         user = "hunter",
