@@ -13,6 +13,7 @@
     <class>pl.lodz.p.it.spjava.e11.huntingBook.model.CullDetails</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
+    <validation-mode>NONE</validation-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/HuntingBookDB"/>
       <property name="javax.persistence.jdbc.user" value="hunter"/>
