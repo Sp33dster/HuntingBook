@@ -3,6 +3,8 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -19,6 +21,7 @@ public class Account extends AbstractEntity implements Serializable {
     @Id
     @NotNull
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull

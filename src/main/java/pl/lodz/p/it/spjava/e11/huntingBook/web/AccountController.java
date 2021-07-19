@@ -1,26 +1,25 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.web;
 
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.HunterEndpoint;
-
+import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.AccountEndpoint;
 
 @Named("accountController")
 @SessionScoped
 public class AccountController implements Serializable {
-    
+
     @Inject
-    private HunterEndpoint hunterEndpoint;
-    
+    private AccountEndpoint accountEndpoint;
+
     private HunterDTO hunterCreate;
-    
-    public void createAccount(HunterDTO hunterDTO){
+
+    public void createHunter(HunterDTO hunterDTO) {
+        System.out.println("KontoKontroler");
         hunterCreate = hunterDTO;
-        hunterEndpoint.createAccount(hunterCreate);
-        
+        accountEndpoint.createAccount(hunterDTO);
+        hunterCreate = null;
     }
 }

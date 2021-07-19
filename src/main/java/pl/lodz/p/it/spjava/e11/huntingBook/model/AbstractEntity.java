@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
@@ -25,11 +29,11 @@ public class AbstractEntity implements Serializable {
     @Column(name = "version")
     private int version;
 
-    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_timestamp")
     private Date creationTimestamp;
 
-    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modification_timestamp")
     private Date modificationTimestamp;
 
@@ -73,6 +77,16 @@ public class AbstractEntity implements Serializable {
 
     public void setModificationTimestamp(Date modificationTimestamp) {
         this.modificationTimestamp = modificationTimestamp;
+    }
+
+    @PreUpdate
+    private void updateTimestamp() {
+        modificationTimestamp = new Date();
+    }
+
+    @PrePersist
+    private void creationTimestamp() {
+        creationTimestamp = new Date();
     }
 
     @Override

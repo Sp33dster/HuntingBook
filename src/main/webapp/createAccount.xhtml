@@ -11,33 +11,43 @@
         <h:form>
             <br/>
             <span class="ui-float-label">
-                <p:inputText id="login-input" value="#{accountPageBean.hunterDTO.login}"/>
+                <p:inputText id="login-input" value="#{createHunterBean.hunter.login}"/>
                 <p:outputLabel for="@previous" value="Login"/>
             </span>
             <br/>
 
             <span class="ui-float-label">
-                <p:inputText id="password-input" value="#{accountPageBean.hunterDTO.password}"/>
+                <p:inputText id="password-input" value="#{createHunterBean.hunter.password}"/>
                 <p:outputLabel for="@previous" value="Password"/>
             </span>
             <br/>
             <span class="ui-float-label">
-                <p:inputText id="name-input" value="#{accountPageBean.hunterDTO.name}"/>
+                <p:inputText id="name-input" value="#{createHunterBean.hunter.name}"/>
                 <p:outputLabel for="@previous" value="Name"/>
             </span>
             <br/>
             <span class="ui-float-label">
-                <p:inputText id="surname-input" value="#{accountPageBean.hunterDTO.surname}"/>
+                <p:inputText id="surname-input" value="#{createHunterBean.hunter.surname}"/>
                 <p:outputLabel for="@previous" value="Surname"/>
             </span>
             <br/>
             <span class="ui-float-label">
-                <p:inputText id="email-input" value="#{accountPageBean.hunterDTO.email}"/>
+                <p:inputText id="email-input" value="#{createHunterBean.hunter.email}"/>
                 <p:outputLabel for="@previous" value="Email"/>
+            </span>
+            <br/>
+            <span class="ui-float-label">
+                <p:inputText id="pesel-input" value="#{createHunterBean.hunter.pesel}"/>
+                <p:outputLabel for="@previous" value="PESEL"/>
+            </span>
+            <br/>
+            <span class="ui-float-label">
+                <p:inputText id="phone_number-input" value="#{createHunterBean.hunter.phoneNumber}"/>
+                <p:outputLabel for="@previous" value="Phone Number"/>
             </span>
             
             <br/>
-            <h:commandButton value="OK" action="#{accountPageBean.create()}"/>
+            <h:commandButton value="OK" action="#{createHunterBean.create()}"/>
             <h:commandButton value="Cancel" action="cancel"/>
         </h:form>
     </h:body>
