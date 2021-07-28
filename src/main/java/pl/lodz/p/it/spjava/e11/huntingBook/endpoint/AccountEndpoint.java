@@ -1,15 +1,18 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.endpoint;
 
-import java.util.Date;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.DTOConverter;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.AccountFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.HunterFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.AccountManager;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
@@ -26,18 +29,18 @@ public class AccountEndpoint {
 
     @Inject
     private HunterFacade hunterFacade;
+    
+    private Account accountToEdit;
+    
+    private Account accountToDelete;
 
     public void createAccount(HunterDTO hunterDTO) {
         Hunter hunter = new Hunter();
-        System.out.println("Konto kontroler");
 
         hunter.setLogin(hunterDTO.getLogin());
-        System.out.println("login");
         hunter.setPassword(hunterDTO.getPassword());
-        System.out.println("password");
         hunter.setIsActive(false);
         hunter.setName(hunterDTO.getName());
-        System.out.println("name");
         hunter.setSurname(hunterDTO.getSurname());
         hunter.setEmail(hunterDTO.getEmail());
         hunter.setType(AccountType.HUNTER);
@@ -45,9 +48,31 @@ public class AccountEndpoint {
         hunter.setPhoneNumber(hunterDTO.getPhoneNumber());
         hunter.setIsHunting(Boolean.FALSE);
         hunter.setVersion(1);
-        System.out.println("przed create");
+
         accountManager.createAccount(hunter);
-        System.out.println("po create");
+
+    }
+
+    public List<AccountDTO> getListOfAllAccounts() {
+        return DTOConverter.createAccountDTOListFromEntity(accountFacade.findAll());
+    }
+
+    public AccountDTO getAccountToEdit(AccountDTO accountDTO) {
+    accountToEdit = accountFacade.findLogin(accountDTO.getLogin());
+    return DTOConverter.createAccountDTOFromEntity(accountToEdit);
+            }
+
+    public void saveAccountAfterEdit(AccountDTO accountDTO) {
+        accountToEdit.setName(accountDTO.getName());
+        accountToEdit.setSurname(accountDTO.getSurname());
+        accountToEdit.setEmail(accountDTO.getEmail());
+        accountFacade.edit(accountToEdit);
+        accountToEdit = null;
+    }
+
+    public void deleteAccount(AccountDTO accountDTO) {
+        accountToDelete = accountFacade.findLogin(accountDTO.getLogin());
+        accountFacade.remove(accountToDelete);
     }
 
 }

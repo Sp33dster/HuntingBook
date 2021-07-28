@@ -4,16 +4,39 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
     <navigation-rule>
-        <from-view-id>/feces/index.xhtml</from-view-id>
+        <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>createAccount</from-outcome>
-            <to-view-id>/faces/createAccount.xhtml</to-view-id>
+            <to-view-id>/createAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>accountList</from-outcome>
+            <to-view-id>/accountsList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/success.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>deleteSuccess</from-outcome>
+            <to-view-id>/deleteSuccess.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>cancel</from-outcome>
-            <to-view-id>/faces/index.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 </faces-config>

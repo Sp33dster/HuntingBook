@@ -20,8 +20,8 @@ public class HunterDTO extends AccountDTO {
 
     private List<Hunt> listOfHunt;
 
-    public HunterDTO(String pesel, String phoneNumber, Address addres, String login, String password, boolean isActive, String name, String surname, String email, AccountType type) {
-        super(login, password, isActive, name, surname, email, type);
+    public HunterDTO(String pesel, String phoneNumber, Address addres, String login, boolean isActive, String name, String surname, String email, AccountType type) {
+        super(login, isActive, name, surname, email, type);
         this.pesel = pesel;
         this.phoneNumber = phoneNumber;
         this.isHunting = false;

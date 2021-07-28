@@ -3,6 +3,7 @@ package pl.lodz.p.it.spjava.e11.huntingBook.dto;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
 public class AccountDTO {
+
     private String login;
 
     private String password;
@@ -21,9 +22,8 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(String login, String password, boolean isActive, String name, String surname, String email, AccountType type) {
+    public AccountDTO(String login, boolean isActive, String name, String surname, String email, AccountType type) {
         this.login = login;
-        this.password = password;
         this.isActive = isActive;
         this.name = name;
         this.surname = surname;
@@ -31,8 +31,6 @@ public class AccountDTO {
         this.type = type;
     }
 
-    
-    
     public String getLogin() {
         return login;
     }
@@ -91,9 +89,7 @@ public class AccountDTO {
 
     @Override
     public String toString() {
-        return "AccountDTO{" + "login=" + login + ", password=" + password + ", isActive=" + isActive + ", name=" + name + ", surname=" + surname + ", email=" + email + ", type=" + type + '}';
+        return "AccountDTO{" + "login=" + login +  ", isActive=" + isActive + ", name=" + name + ", surname=" + surname + ", email=" + email + ", type=" + type + '}';
     }
 
-    
-    
 }
