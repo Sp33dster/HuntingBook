@@ -14,17 +14,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
 @Entity
 @Table(name = "Hunter")
 public class Hunter extends Account implements Serializable {
 
-    @Id
-    @NotNull
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "pesel")
@@ -59,23 +55,13 @@ public class Hunter extends Account implements Serializable {
     public Hunter() {
     }
 
-    public Hunter(Long id) {
-        this.id = id;
-    }
-
-    public Hunter(Long id, String pesel, String phoneNumber) {
-        this.id = id;
+    public Hunter(String pesel, String phoneNumber, Long id, String login, String password, boolean isActive, String name, String surname, String email, AccountType type) {
+        super(id, login, password, isActive, name, surname, email, type);
         this.pesel = pesel;
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+       
 
     public String getPesel() {
         return pesel;
@@ -141,29 +127,5 @@ public class Hunter extends Account implements Serializable {
         this.cullCollection = cullCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hunter)) {
-            return false;
-        }
-        Hunter other = (Hunter) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter[ id=" + id + " ]";
-    }
-
+    
 }

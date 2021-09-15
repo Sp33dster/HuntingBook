@@ -17,7 +17,7 @@ public class DTOConverter {
 
     public static AccountDTO createAccountDTOFromEntity(Account account) {
         //toDO createAccountDTOFromEntity then cerateHunter/AdministratorDTOFromEntity
-        return null == account ? null : new AccountDTO(account.getLogin(), account.getIsActive(), account.getName(), account.getSurname(), account.getEmail(), account.getType());
+        return null == account ? null : new AccountDTO(account.getId(), account.getLogin(), account.getIsActive(), account.getName(), account.getSurname(), account.getEmail(), account.getType());
     }
     
 }

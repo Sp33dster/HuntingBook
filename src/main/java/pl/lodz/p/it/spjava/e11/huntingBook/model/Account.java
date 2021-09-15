@@ -159,9 +159,4 @@ public class Account extends AbstractEntity implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "pl.lodz.p.it.spjava.e11.huntingBook.model.Account[ id=" + id + " ]";
-    }
-
 }

@@ -1,6 +1,8 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.dto;
 
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Address;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Cull;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
@@ -8,8 +10,12 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
 public class HunterDTO extends AccountDTO {
 
+    @NotNull(message = "{constraint.notnull}")
+    @Size(max=12,message="{constraint.string.length.toolong}")
     private String pesel;
 
+    @NotNull(message = "{constraint.notnull}")
+    @Size(min=6, max=9,message="{constraint.string.length.notinrange}")
     private String phoneNumber;
 
     private Boolean isHunting;
@@ -20,8 +26,8 @@ public class HunterDTO extends AccountDTO {
 
     private List<Hunt> listOfHunt;
 
-    public HunterDTO(String pesel, String phoneNumber, Address addres, String login, boolean isActive, String name, String surname, String email, AccountType type) {
-        super(login, isActive, name, surname, email, type);
+    public HunterDTO(String pesel, String phoneNumber, Address addres, Long id, String login, boolean isActive, String name, String surname, String email, AccountType type) {
+        super(id, login, isActive, name, surname, email, type);
         this.pesel = pesel;
         this.phoneNumber = phoneNumber;
         this.isHunting = false;
