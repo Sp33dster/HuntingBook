@@ -2,12 +2,10 @@ package pl.lodz.p.it.spjava.e11.huntingBook.web;
 
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
 
 @Named
 @RequestScoped
@@ -37,11 +35,10 @@ public class CreateHunterBean implements Serializable {
 
     public String create() {
         if (hunter.getPassword().equals(repeatPassword)) {
-            accountController.createHunter(hunter);
-            return "success";
+            return accountController.createHunter(hunter);
+
         } else {
-            FacesContext.getCurrentInstance()
-                    .addMessage("createAccountForm", new FacesMessage("Passwords shoud be the same"));
+            ContextUtils.emitInternationalizedMessage("createAdministratorForm:passwordRepeat", "passwords.not.matching");
             return "";
         }
     }
