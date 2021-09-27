@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ContextUtils {
 
-
     public ContextUtils() {
     }
 
@@ -37,10 +36,14 @@ public class ContextUtils {
     public static boolean isInternationalizationKeyExist(String key) {
         return ContextUtils.getDefaultBundle().getString(key) != null && !"".equals(ContextUtils.getDefaultBundle().getString(key));
     }
-    
+
     public static void emitInternationalizedMessage(String id, String key) {
         FacesMessage msg = new FacesMessage(ContextUtils.getDefaultBundle().getString(key));
         msg.setSeverity(FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage(id, msg);
+    }
+
+    public static void emitSuccessMessage(String id) {
+        emitInternationalizedMessage(id, "general.success.message");
     }
 }
