@@ -3,6 +3,8 @@ package pl.lodz.p.it.spjava.e11.huntingBook.web;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,6 +20,13 @@ public class AccountsListPageBean implements Serializable {
     private AccountController accountController;
 
     private List<AccountDTO> accounts;
+    
+    private DataModel<AccountDTO> accountDataModel;
+
+    public DataModel<AccountDTO> getAccountDataModel() {
+        return accountDataModel;
+    }
+            
 
     private String searchByLogin = "";
     private String searchByEmail = "";
@@ -63,31 +72,32 @@ public class AccountsListPageBean implements Serializable {
         this.searchBySurname = searchBySurname;
     }
 
-    public String editAccount(AccountDTO accountDTO) {
-        return accountController.getAccountToEdit(accountDTO);
+    public String editAccount() {
+        return accountController.getAccountToEdit(accountDataModel.getRowData());
     }
 
-    public String deleteAccount(AccountDTO accountDTO) {
-        return accountController.deleteAccount(accountDTO);
+    public String deleteAccount() {
+        return accountController.deleteAccount(accountDataModel.getRowData());
     }
 
-    public void activateAccount(AccountDTO accountDTO) {
-        accountController.activateAccount(accountDTO);
+    public void activateAccount() {
+        accountController.activateAccount(accountDataModel.getRowData());
         initModel();
     }
 
-    public void deactivateAccount(AccountDTO accountDTO) {
-        accountController.deactivateAccount(accountDTO);
+    public void deactivateAccount() {
+        accountController.deactivateAccount(accountDataModel.getRowData());
         initModel();
     }
 
-    public String startChangingPassword(AccountDTO accountDTO) {
-        return accountController.startChangingPassword(accountDTO);
+    public String startChangingPassword() {
+        return accountController.startChangingPassword(accountDataModel.getRowData());
     }
 
     @PostConstruct
     private void initModel() {
         accounts = accountController.matchAccounts(searchByLogin, searchByName, searchByName, searchByEmail);
+        accountDataModel = new ListDataModel<>(accounts);
     }
 
     public void refresh() {

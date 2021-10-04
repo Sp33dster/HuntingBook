@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+                    <p:outputLabel value="#{msg['account.name']}" for="name" />
+                    <h:outputText id="name" value="#{pageBean.account.name}" title="#{msg['account.name']}" />
+                    <p:messages for="name" />
+                    <p:outputLabel value="#{msg['account.surname']}" for="surname" />
+                    <h:outputText id="surname" value="#{pageBean.account.surname}" title="#{msg['account.surname']}" />
+                    <p:messages for="surname" />
+                    <p:outputLabel value="#{msg['account.email']}" for="email" />
+                    <h:outputText id="email" value="#{pageBean.account.email}" title="#{msg['account.email']}" />
+                    <p:messages for="email" />
+
+</ui:composition>
+
+

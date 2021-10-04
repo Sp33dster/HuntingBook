@@ -1,11 +1,17 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.web.utils;
 
+import java.security.Principal;
 import java.util.ResourceBundle;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+@ApplicationScoped
+@Named
 public class ContextUtils {
 
     public ContextUtils() {
@@ -13,6 +19,21 @@ public class ContextUtils {
 
     public static ExternalContext getContext() {
         return FacesContext.getCurrentInstance().getExternalContext();
+    }
+
+    public String invalidateSession() {
+        ((HttpSession) getContext().getSession(true)).invalidate();
+        return "main";
+    }
+
+    public static String getSessionID() {
+        HttpSession session = (HttpSession) getContext().getSession(true);
+        return session.getId();
+    }
+
+    public String getUserName() {
+        Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        return (null == p ? "" : p.getName());
     }
 
     public static String getUserAddress() {

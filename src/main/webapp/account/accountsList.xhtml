@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+    <ui:define name="main">
+        <h:form id="accountListForm">
+            <h:messages for="accountList"/>
+            <h:panelGrid columns="3">
+                <h:outputLabel for="matchLogin" value="#{msg['account.matchByLogin']}"/><h:inputText id="matchLogin" value="#{accountsListPageBean.searchByLogin}" /><h:commandButton value="#{msg['action.refresh']}" action="#{accountsListPageBean.refresh()}" />
+                <h:outputLabel for="matchName" value="#{msg['account.matchByName']}"/><h:inputText id="matchName" value="#{accountsListPageBean.searchByName}" /><h:commandButton value="#{msg['action.reset']}" action="#{accountsListPageBean.erase()}" />
+                <h:outputLabel for="matchSurname" value="#{msg['account.matchBySurname']}"/><h:inputText id="matchSurname" value="#{accountsListPageBean.searchBySurname}" /><h:column />
+                <h:outputLabel for="matchEmail" value="#{msg['account.matchByEmail']}"/><h:inputText id="matchEmail" value="#{accountsListPageBean.searchByEmail}" /><h:column />
+            </h:panelGrid>
+            <p:dataTable id="accountList" var="row" value="#{accountsListPageBean.accountDataModel}">
+                <p:column id="login" headerText="${msg['account.login']}">
+                    <h:outputText value="#{row.login}" />
+                </p:column>
+                <p:column id="name" headerText="${msg['account.name']}">
+                    <h:outputText value="#{row.name}" />
+                </p:column>
+                <p:column id="surname">
+                    <f:facet name="header">${msg['account.surname']}</f:facet>
+                    <h:outputText value="#{row.surname}" />
+                </p:column>
+                <p:column id="email">
+                    <f:facet name="header">${msg['account.email']}</f:facet>
+                    <h:outputText value="#{row.email}" />
+                </p:column>
+                <p:column id="type">
+                    <f:facet name="header">${msg['account.type']}</f:facet>
+                    <ui:param name="accountType" value="#{row.accountType}" />
+                    <h:outputText value="${msg['account.type']}" />
+                </p:column>
+
+                <p:column id="state" headerText="${msg['account.state']}">
+                    <h:panelGrid columns="2">
+                        <h:selectBooleanCheckbox id="active" value="#{row.active}" disabled="true"/>    
+                        <h:outputLabel for="active" value="${msg['account.active']}" />    
+                    </h:panelGrid>
+                </p:column>
+
+                <p:column id="actions" headerText="${msg['general.actions']}">
+                    <p:commandButton action="#{accountsListPageBean.editAccount()}" value="${msg['action.edit']}"/>
+                    <p:commandButton action="#{accountsListPageBean.startChangingPassword()}" value="${msg['menu.accounts.changePassword']}"/>
+                    <p:commandButton action="#{accountsListPageBean.activateAccount()}" value="${msg['action.activate']}" rendered="#{not row.active}"/>
+                    <p:commandButton action="#{accountsListPageBean.deactivateAccount()}" value="${msg['action.deactivate']}" rendered="#{row.active}"/>
+                    <p:commandButton action="#{accountsListPageBean.deleteAccount()}" value="${msg['action.delete']}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
