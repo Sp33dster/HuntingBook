@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -173,5 +174,19 @@ public class AccountController implements Serializable {
         accountEndpoint.changeMyPassword(oldPassword, newPassword);
         return "success";
     }
-
+    
+    @PostConstruct
+    private void init(){
+        LOG.severe("Session started: " + ContextUtils.getSessionID());
+    }
+    
+    public String invalidateSession(){
+        ContextUtils.invalidateSession();
+        return "cancelAction";
+        
+    }
+    
+    public String getMyLogin(){
+        return ContextUtils.getUserName();
+    }
 }

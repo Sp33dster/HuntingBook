@@ -6,10 +6,10 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-                    <p:outputLabel value="#{msg['account.alarmNumber']}" for="alarmNumber" />
-                    <h:outputText id="alarmNumber" value="#{pageBean.account.alarmNumber}" title="#{msg['account.alarmNumber']}" />
-                    <p:messages for="alarmNumber" />
-               
+                    <p:outputLabel value="#{msg['account.login']}" for="login" />
+                    <p:inputText id="login" value="#{pageBean.account.login}" title="#{msg['account.login']} *" required="true" />
+                    <p:message for="login" />
+
 </ui:composition>
 
 

@@ -13,7 +13,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AdministratorDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.DTOConverter;
+import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.MasterOfTheHunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AccountException;
@@ -125,6 +125,7 @@ public class AccountEndpoint {
         MasterOfTheHunter motHunter = new MasterOfTheHunter();
         rewriteDataToNewAccount(masterOfTheHunterDTO, motHunter);
 
+        motHunter.setType(AccountType.MASTER_OF_THE_HUNTER);
         motHunter.setContactNumber(masterOfTheHunterDTO.getContactNumber());
 
         boolean rollbackTX;

@@ -5,12 +5,14 @@
                 template="../templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
-
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:define name="top">
         <ui:include src="../templates/menu.xhtml"/>
     </ui:define>
+
     <ui:define name="main">
+        <h3>${msg['menu.accounts.list']}</h3>
         <h:form id="accountListForm">
             <h:messages for="accountList"/>
             <h:panelGrid columns="3">
@@ -36,23 +38,22 @@
                 </p:column>
                 <p:column id="type">
                     <f:facet name="header">${msg['account.type']}</f:facet>
-                    <ui:param name="accountType" value="#{row.accountType}" />
-                    <h:outputText value="${msg['account.type']}" />
+                    <ui:param name="accountType" value="#{row.type}" />
+                    <h:outputText value="${msg[accountType]}" />
                 </p:column>
 
                 <p:column id="state" headerText="${msg['account.state']}">
-                    <h:panelGrid columns="2">
-                        <h:selectBooleanCheckbox id="active" value="#{row.active}" disabled="true"/>    
-                        <h:outputLabel for="active" value="${msg['account.active']}" />    
-                    </h:panelGrid>
-                </p:column>
 
+                    <p:selectBooleanCheckbox id="active" disabled="true" value="#{row.isActive}" />  
+                    <h:outputText value="  ${msg['account.active']}" rendered="#{row.isActive}"/>
+                    <h:outputText value="  ${msg['account.notactive']}" rendered="#{not row.isActive}"/>
+                </p:column>
                 <p:column id="actions" headerText="${msg['general.actions']}">
-                    <p:commandButton action="#{accountsListPageBean.editAccount()}" value="${msg['action.edit']}"/>
-                    <p:commandButton action="#{accountsListPageBean.startChangingPassword()}" value="${msg['menu.accounts.changePassword']}"/>
-                    <p:commandButton action="#{accountsListPageBean.activateAccount()}" value="${msg['action.activate']}" rendered="#{not row.active}"/>
-                    <p:commandButton action="#{accountsListPageBean.deactivateAccount()}" value="${msg['action.deactivate']}" rendered="#{row.active}"/>
-                    <p:commandButton action="#{accountsListPageBean.deleteAccount()}" value="${msg['action.delete']}"/>
+                    <p:commandButton action="#{accountsListPageBean.editAccount()}" value="${msg['menu.accounts.edit']}" styleClass="rounded-button"/>
+                    <p:commandButton action="#{accountsListPageBean.startChangingPassword()}" value="${msg['menu.accounts.changePassword']}" styleClass="rounded-button"/>
+                    <p:commandButton action="#{accountsListPageBean.activateAccount()}" value="${msg['action.activate']}" update="accountList"  rendered="#{not row.isActive}" styleClass="rounded-button ui-button-success"/>
+                    <p:commandButton action="#{accountsListPageBean.deactivateAccount()}" value="${msg['action.deactivate']}" update="accountList" rendered="#{row.isActive}" styleClass="rounded-button ui-button-warning"/>
+                    <p:commandButton action="#{accountsListPageBean.deleteAccount()}" value="${msg['action.delete']}" styleClass="rounded-button ui-button-danger"/>
                 </p:column>
             </p:dataTable>
         </h:form>

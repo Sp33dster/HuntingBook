@@ -12,11 +12,15 @@ import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
 public class CreateAdministratorPageBean implements Serializable {
 
     private String repeatPassword = "";
-    
+
     @Inject
     private AccountController accountController;
-    
-    private AdministratorDTO administratorDTO = new AdministratorDTO();
+
+    private AdministratorDTO account = new AdministratorDTO();
+
+    public AdministratorDTO getAccount() {
+        return account;
+    }
 
     public CreateAdministratorPageBean() {
     }
@@ -29,12 +33,12 @@ public class CreateAdministratorPageBean implements Serializable {
         this.repeatPassword = repeatPassword;
     }
 
-    public String create(){
-        if(!(repeatPassword.equals(administratorDTO.getPassword()))){
+    public String create() {
+        if (!(repeatPassword.equals(account.getPassword()))) {
             ContextUtils.emitInternationalizedMessage("createAdministratorForm:passwordRepeat", "passwords.not.matching");
             return null;
         }
-        return accountController.createAdministrator(administratorDTO);
+        return accountController.createAdministrator(account);
     }
-    
+
 }

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <div class="card">
+            <p:tooltip/>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+            <ui:param name="pageBean" value="#{createHunterBean}" />
+            <h3>${msg['menu.accounts.createhunter']}</h3>
+
+            <h:form id="createHunterForm">
+               
+                <h:panelGrid id="grid" columns="3" cellpadding="7">
+
+                    <ui:include src="_templateLoginEdit.xhtml"/>
+                    <ui:include src="_templatePasswordEdit.xhtml"/>
+                    <ui:include src="_templateAccountDetailsEdit.xhtml"/>
+
+                    <ui:include src="_templateHunterDetailsEdit.xhtml" />
+
+                </h:panelGrid>
+                <br/>
+                <p:commandButton action="#{pageBean.create()}" update="grid" value="${msg['action.create']}"/>
+                <p:divider/>
+                <p:commandButton value="#{msg['action.cancel']}" action="accountsList" immediate="true" />
+
+
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>
+

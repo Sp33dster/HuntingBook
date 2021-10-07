@@ -21,9 +21,20 @@ public class ContextUtils {
         return FacesContext.getCurrentInstance().getExternalContext();
     }
 
-    public String invalidateSession() {
+    public static Object getApplicationAttribute(String attributeName) {
+        return getContext().getApplicationMap().get(attributeName);
+    }
+
+    public static Object getSessionAttribute(String attributeName) {
+        return getContext().getSessionMap().get(attributeName);
+    }
+
+    public static Object getRequestAttribute(String attributeName) {
+        return getContext().getRequestMap().get(attributeName);
+    }
+
+    public static void invalidateSession() {
         ((HttpSession) getContext().getSession(true)).invalidate();
-        return "main";
     }
 
     public static String getSessionID() {
@@ -31,9 +42,9 @@ public class ContextUtils {
         return session.getId();
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         Principal p = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-        return (null == p ? "" : p.getName());
+        return (null == p ? "!BRAK UWIERZYTELNIENIA" : p.getName());
     }
 
     public static String getUserAddress() {
@@ -50,7 +61,7 @@ public class ContextUtils {
         if (null == bundlePath) {
             return null;
         } else {
-            return ResourceBundle.getBundle(bundlePath, FacesContext.getCurrentInstance().getViewRoot().getLocale());
+            return ResourceBundle.getBundle(bundlePath);
         }
     }
 
@@ -60,7 +71,7 @@ public class ContextUtils {
 
     public static void emitInternationalizedMessage(String id, String key) {
         FacesMessage msg = new FacesMessage(ContextUtils.getDefaultBundle().getString(key));
-        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+        
         FacesContext.getCurrentInstance().addMessage(id, msg);
     }
 

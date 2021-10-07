@@ -20,7 +20,6 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 @Table(name = "Hunter")
 public class Hunter extends Account implements Serializable {
 
-    
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "pesel")
@@ -33,10 +32,6 @@ public class Hunter extends Account implements Serializable {
 
     @Column(name = "isHunting")
     private Boolean isHunting;
-
-    @JoinColumn(name = "addres_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Address addresId;
 
     @JoinColumn(name = "cull_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -61,8 +56,6 @@ public class Hunter extends Account implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-       
-
     public String getPesel() {
         return pesel;
     }
@@ -85,14 +78,6 @@ public class Hunter extends Account implements Serializable {
 
     public void setIsHunting(Boolean isHunting) {
         this.isHunting = isHunting;
-    }
-
-    public Address getAddresId() {
-        return addresId;
-    }
-
-    public void setAddresId(Address addresId) {
-        this.addresId = addresId;
     }
 
     public Cull getCullId() {
@@ -127,5 +112,4 @@ public class Hunter extends Account implements Serializable {
         this.cullCollection = cullCollection;
     }
 
-    
 }

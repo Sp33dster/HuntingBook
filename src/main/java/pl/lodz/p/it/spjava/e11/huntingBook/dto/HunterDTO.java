@@ -3,7 +3,6 @@ package pl.lodz.p.it.spjava.e11.huntingBook.dto;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.Address;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Cull;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
@@ -11,27 +10,24 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 public class HunterDTO extends AccountDTO {
 
     @NotNull(message = "{constraint.notnull}")
-    @Size(max=12,message="{constraint.string.length.toolong}")
+    @Size(max = 12, message = "{constraint.string.length.toolong}")
     private String pesel;
 
     @NotNull(message = "{constraint.notnull}")
-    @Size(min=6, max=9,message="{constraint.string.length.notinrange}")
+    @Size(min = 6, max = 9, message = "{constraint.string.length.notinrange}")
     private String phoneNumber;
 
     private Boolean isHunting;
-
-    private Address addres;
 
     private List<Cull> listOfCull;
 
     private List<Hunt> listOfHunt;
 
-    public HunterDTO(String pesel, String phoneNumber, Address addres, Long id, String login, boolean isActive, String name, String surname, String email, AccountType type) {
+    public HunterDTO(String pesel, String phoneNumber, Long id, String login, boolean isActive, String name, String surname, String email, AccountType type) {
         super(id, login, isActive, name, surname, email, type);
         this.pesel = pesel;
         this.phoneNumber = phoneNumber;
         this.isHunting = false;
-        this.addres = addres;
     }
 
     public HunterDTO() {
@@ -61,14 +57,6 @@ public class HunterDTO extends AccountDTO {
         this.isHunting = isHunting;
     }
 
-    public Address getAddres() {
-        return addres;
-    }
-
-    public void setAddres(Address addres) {
-        this.addres = addres;
-    }
-
     public List<Cull> getListOfCull() {
         return listOfCull;
     }
@@ -87,7 +75,7 @@ public class HunterDTO extends AccountDTO {
 
     @Override
     public String toString() {
-        return "HunterDTO{" + super.toString() + "pesel=" + pesel + ", phoneNumber=" + phoneNumber + ", isHunting=" + isHunting + ", addres=" + addres + ", listOfCull=" + listOfCull + ", listOfHunt=" + listOfHunt + '}';
+        return "HunterDTO{" + super.toString() + "pesel=" + pesel + ", phoneNumber=" + phoneNumber + ", isHunting=" + isHunting + ", listOfCull=" + listOfCull + ", listOfHunt=" + listOfHunt + '}';
     }
 
 }

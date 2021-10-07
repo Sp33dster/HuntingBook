@@ -15,41 +15,41 @@ public class EditAccountPageBean {
     @Inject
     private AccountController accountController;
 
-    private AccountDTO accountDTO = new AccountDTO();
+    private AccountDTO account = new AccountDTO();
 
     public EditAccountPageBean() {
     }
 
-    public AccountDTO getAccountDTO() {
-        return accountDTO;
+    public AccountDTO getAccount() {
+        return account;
     }
 
     @PostConstruct
     private void init() {
-        accountDTO = accountController.getEditAccount();
+        account = accountController.getEditAccount();
     }
 
     public boolean isHunter() {
-        return AccountUtils.isHunter(accountDTO);
+        return AccountUtils.isHunter(account);
     }
 
     public boolean isAdministrator() {
-        return AccountUtils.isAdministrator(accountDTO);
+        return AccountUtils.isAdministrator(account);
     }
 
     public boolean isMasterOfTheHunter() {
-        return AccountUtils.isMasterOfTheHunter(accountDTO);
+        return AccountUtils.isMasterOfTheHunter(account);
     }
 
     public String saveHunterAfterEdit() throws AppBaseException {
-        return accountController.saveHunterAfterEdit(accountDTO);
+        return accountController.saveHunterAfterEdit(account);
     }
 
     public String saveAdministratorAfterEdit() throws AppBaseException {
-        return accountController.saveAdministratorAfterEdit(accountDTO);
+        return accountController.saveAdministratorAfterEdit(account);
     }
 
     public String saveMasterOfTheHunterAfterEdit() throws AppBaseException {
-        return accountController.saveMasterOfTheHunterAfterEdit(accountDTO);
+        return accountController.saveMasterOfTheHunterAfterEdit(account);
     }
 }

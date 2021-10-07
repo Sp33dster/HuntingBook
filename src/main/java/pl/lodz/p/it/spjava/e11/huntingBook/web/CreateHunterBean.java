@@ -17,12 +17,12 @@ public class CreateHunterBean implements Serializable {
     @Inject
     private AccountController accountController;
 
-    private HunterDTO hunter = new HunterDTO();
+    private HunterDTO account = new HunterDTO();
 
-    private String repeatPassword;
+    private String repeatPassword = "";
 
-    public HunterDTO getHunter() {
-        return hunter;
+    public HunterDTO getAccount() {
+        return account;
     }
 
     public String getRepeatPassword() {
@@ -34,13 +34,13 @@ public class CreateHunterBean implements Serializable {
     }
 
     public String create() {
-        if (hunter.getPassword().equals(repeatPassword)) {
-            return accountController.createHunter(hunter);
+        if (!(repeatPassword.equals(account.getPassword()))) {
+            ContextUtils.emitInternationalizedMessage("createHunterForm:passwordRepeat", "passwords.not.matching");
+            return null;
 
         } else {
-            ContextUtils.emitInternationalizedMessage("createAdministratorForm:passwordRepeat", "passwords.not.matching");
-            return "";
-        }
+            return accountController.createHunter(account);
+                    }
     }
 
 }

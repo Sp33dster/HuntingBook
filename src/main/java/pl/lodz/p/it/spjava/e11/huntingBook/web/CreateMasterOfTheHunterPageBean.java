@@ -13,32 +13,32 @@ public class CreateMasterOfTheHunterPageBean {
     @Inject
     private AccountController accountController;
     
-    private MasterOfTheHunterDTO masterOfTheHunterDTO = new MasterOfTheHunterDTO();
+    private MasterOfTheHunterDTO account = new MasterOfTheHunterDTO();
 
-    private String passwordRepeat = "";
+    private String repeatPassword = "";
     
     public CreateMasterOfTheHunterPageBean() {
     }
 
-    public MasterOfTheHunterDTO getMasterOfTheHunterDTO() {
-        return masterOfTheHunterDTO;
+    public MasterOfTheHunterDTO getAccount() {
+        return account;
     }
 
-    public String getPasswordRepeat() {
-        return passwordRepeat;
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
 
-    public void setPasswordRepeat(String passwordRepeat) {
-        this.passwordRepeat = passwordRepeat;
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
     
     public String create(){
-        if(!(passwordRepeat.equals(masterOfTheHunterDTO.getPassword()))){
+        if(!(repeatPassword.equals(account.getPassword()))){
             ContextUtils.emitInternationalizedMessage("createMasterOfTheHunterForm:passwordRepeat", "passwords.not.matching");
             return null;
         }
         
-        return accountController.createMasterOfTheHunter(masterOfTheHunterDTO);
+        return accountController.createMasterOfTheHunter(account);
     }
         
 }

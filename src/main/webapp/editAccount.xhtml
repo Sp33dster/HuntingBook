@@ -11,20 +11,20 @@
         <h:form id="editAccountForm">
             <br/>
             <h:outputLabel value="Imię *"  />
-            <h:inputText id="name" value="#{editAccountPageBean.accountDTO.name}" title="imie" required="true" >
+            <h:inputText id="name" value="#{editAccountPageBean.account.name}" title="imie" required="true" >
 
             </h:inputText>
 
 
             <h:outputLabel value="Nazwisko *" />
-            <h:inputText id="surname" value="#{editAccountPageBean.accountDTO.surname}" title="nazwisko" required="true" >
+            <h:inputText id="surname" value="#{editAccountPageBean.accaccountrname}" title="nazwisko" required="true" >
                 <!--Poniższe walidatory zostały zastąpione przez adnotacje BeanValidation-->
                 <!--<f:validateLength minimum="3" maximum="32" />-->
             </h:inputText>
 
 
             <h:outputLabel value="email *" />
-            <h:inputText id="email" value="#{editAccountPageBean.accountDTO.email}" title="#email'" required="true" >
+            <h:inputText id="email" value="#{editAccountPageBean.accounaccount}" title="#email'" required="true" >
                 <!--Poniższe walidatory zostały zastąpione przez adnotacje BeanValidation-->
                 <!--        <f:validateLength minimum="6" maximum="64" />
                         <f:validateRegex pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />-->

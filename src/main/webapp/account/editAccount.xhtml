@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:param name="pageBean" value="#{editAccountPageBean}" />
+
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <h3>${msg['menu.accounts.edit']}</h3>
+        <h:form>
+            <h:panelGrid columns="3">
+
+                <ui:include src="_templateLoginView.xhtml"/>
+
+                <ui:include src="_templateAccountDetailsEdit.xhtml"/>
+
+
+                <c:if test="#{editAccountPageBean.hunter}">
+                    <ui:include src="_templateHunterDetailsEdit.xhtml" />
+                </c:if>
+
+                <c:if test="#{editAccountPageBean.masterOfTheHunter}">
+                    <ui:include src="_templateMasterOfTheHunterEdit.xhtml"/>
+                </c:if>
+
+                <c:if test="#{editAccountPageBean.administrator}">
+                    <ui:include src="_templateAdministratorDetailsEdit.xhtml"/>
+                </c:if>
+
+            </h:panelGrid>
+            <br />
+
+            <c:if test="#{editAccountPageBean.hunter}">
+                <p:commandButton action="#{editAccountPageBean.saveHunterAfterEdit()}" value="#{msg['action.account.edit']}" />
+            </c:if>
+
+            <c:if test="#{editAccountPageBean.masterOfTheHunter}">
+                <p:commandButton action="#{editAccountPageBean.saveMasterOfTheHunterAfterEdit()}" value="#{msg['action.account.edit']}" />
+            </c:if>
+
+            <c:if test="#{editAccountPageBean.administrator}">
+                <p:commandButton action="#{editAccountPageBean.saveAdministratorAfterEdit()}" value="#{msg['action.account.edit']}" />
+            </c:if>
+            
+            <br />
+            <p:commandButton value="#{msg['action.cancel']}" action="accountsList" immediate="true" />
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
