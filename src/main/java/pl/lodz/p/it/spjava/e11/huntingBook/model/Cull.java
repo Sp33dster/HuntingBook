@@ -3,6 +3,7 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +36,10 @@ public class Cull extends AbstractEntity implements Serializable {
     private Date endDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cullId")
-    private Collection<CullDetails> cullCollection;
+    private List<CullDetails> cullDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cullId")
-    private Collection<Hunter> hunterCollection;
+    private List<Hunter> hunterCollection;
 
     @JoinColumn(name = "hunter_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -51,10 +52,19 @@ public class Cull extends AbstractEntity implements Serializable {
         this.id = id;
     }
 
-    public Cull(Long id, Date startDate, Date endDate) {
+    public Cull(Long id, Date startDate, Date endDate, List<CullDetails> cullCollection) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.cullDetails = cullCollection;
+    }
+
+    public List<CullDetails> getCullDetails() {
+        return cullDetails;
+    }
+
+    public void setCullDetails(List<CullDetails> cullDetails) {
+        this.cullDetails = cullDetails;
     }
 
     public Long getId() {
@@ -81,11 +91,11 @@ public class Cull extends AbstractEntity implements Serializable {
         this.endDate = endDate;
     }
 
-    public Collection<Hunter> getHunterCollection() {
+    public List<Hunter> getHunterCollection() {
         return hunterCollection;
     }
 
-    public void setHunterCollection(Collection<Hunter> hunterCollection) {
+    public void setHunterCollection(List<Hunter> hunterCollection) {
         this.hunterCollection = hunterCollection;
     }
 

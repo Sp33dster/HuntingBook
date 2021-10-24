@@ -29,7 +29,7 @@ public class CullDetails extends AbstractEntity implements Serializable {
 
     @NotNull
     @Column(name = "quantity")
-    @Min(value = 0, message = "Animal quantity must be greater than 0")
+    @Min(value = 0)
     private int quantity;
 
     @JoinColumn(name = "cull_id", referencedColumnName = "id")

@@ -9,7 +9,6 @@
     <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt</class>
     <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter</class>
     <class>pl.lodz.p.it.spjava.e11.huntingBook.model.MasterOfTheHunter</class>
-    <class>pl.lodz.p.it.spjava.e11.huntingBook.model.Result</class>
     <class>pl.lodz.p.it.spjava.e11.huntingBook.model.CullDetails</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>

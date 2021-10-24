@@ -2,7 +2,6 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
@@ -27,13 +24,11 @@ public class Result implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "shooting_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date shootingTime;
-
     @Column(name = "is_private_use")
     private Boolean isPrivateUse;
+
+    @Column(name = "is_confirmed")
+    private Boolean isConfirmed;
 
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -48,7 +43,7 @@ public class Result implements Serializable {
     @Column(name = "animal_weight")
     private int animalWeight;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resultId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "result")
     private Collection<Hunt> huntCollection;
 
     public Result() {
@@ -58,19 +53,27 @@ public class Result implements Serializable {
         this.id = id;
     }
 
-    public Result(Long id, Date shootingTime, TypeOfResult typeOfResult) {
+    public Result(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult) {
         this.id = id;
-        this.shootingTime = shootingTime;
+        this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
     }
 
-    public Result(Long id, Date shootingTime, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
+    public Result(Long id, Boolean isPrivateUse, Boolean isConfirmed, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
         this.id = id;
-        this.shootingTime = shootingTime;
         this.isPrivateUse = isPrivateUse;
+        this.isConfirmed = isConfirmed;
         this.typeOfResult = typeOfResult;
         this.animalType = animalType;
         this.animalWeight = animalWeight;
+    }
+
+    public Boolean getIsConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setIsConfirmed(Boolean isConfirmed) {
+        this.isConfirmed = isConfirmed;
     }
 
     public Long getId() {
@@ -79,14 +82,6 @@ public class Result implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getShootingTime() {
-        return shootingTime;
-    }
-
-    public void setShootingTime(Date shootingTime) {
-        this.shootingTime = shootingTime;
     }
 
     public Boolean getIsPrivateUse() {

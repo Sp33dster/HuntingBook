@@ -14,13 +14,24 @@ public class CullDTO {
     @NotNull(message = "{constraint.notnull}")
     private Date endDate;
 
+    private List<CullDetailsDTO> cullDetails;
+
     public CullDTO() {
     }
 
-    public CullDTO(Long id, Date startDate, Date endDate) {
+    public CullDTO(Long id, Date startDate, Date endDate, List<CullDetailsDTO> cullDetails) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.cullDetails = cullDetails;
+    }
+
+    public List<CullDetailsDTO> getCullDetails() {
+        return cullDetails;
+    }
+
+    public void setCullDetails(List<CullDetailsDTO> cullDetails) {
+        this.cullDetails = cullDetails;
     }
 
     public Long getId() {
@@ -47,5 +58,4 @@ public class CullDTO {
         this.endDate = endDate;
     }
 
-    
 }

@@ -1,4 +1,4 @@
-package pl.lodz.p.it.spjava.e11.huntingBook.web;
+package pl.lodz.p.it.spjava.e11.huntingBook.web.account;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

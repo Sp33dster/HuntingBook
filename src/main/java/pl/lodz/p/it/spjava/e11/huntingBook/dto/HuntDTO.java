@@ -10,16 +10,32 @@ public class HuntDTO {
     @NotNull(message = "{constraint.notnull}")
     private Date startTime;
 
-    @NotNull(message = "{constraint.notnull}")
     private Date endTime;
+    @NotNull(message = "{constraint.notnull}")
+    private String area;
 
     public HuntDTO() {
     }
 
-    public HuntDTO(Long id, Date startTime, Date endTime) {
+    public HuntDTO(Long id, Date startTime, String area) {
+        this.id = id;
+        this.startTime = startTime;
+        this.area = area;
+    }
+
+    public HuntDTO(Long id, Date startTime, Date endTime, String area) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.area = area;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public Long getId() {
@@ -45,6 +61,5 @@ public class HuntDTO {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-    
-    
+
 }

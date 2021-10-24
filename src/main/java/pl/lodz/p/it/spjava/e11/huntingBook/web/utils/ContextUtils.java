@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 
 @ApplicationScoped
 @Named
@@ -71,11 +72,23 @@ public class ContextUtils {
 
     public static void emitInternationalizedMessage(String id, String key) {
         FacesMessage msg = new FacesMessage(ContextUtils.getDefaultBundle().getString(key));
-        
+
         FacesContext.getCurrentInstance().addMessage(id, msg);
     }
 
     public static void emitSuccessMessage(String id) {
         emitInternationalizedMessage(id, "general.success.message");
+    }
+
+    public static void emitInternationalizedMessageOfException(AppBaseException ex) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage message = new FacesMessage();
+        String bundle = context.getExternalContext().getInitParameter("resourceBundle.path");
+        if (bundle != null && ex.getMessage() != null) {
+            String localizedMessage = ResourceBundle.getBundle(bundle, context.getViewRoot().getLocale()).getString(ex.getMessage());
+            message.setSummary(localizedMessage);
+        }
+        message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        context.addMessage(null, message);
     }
 }

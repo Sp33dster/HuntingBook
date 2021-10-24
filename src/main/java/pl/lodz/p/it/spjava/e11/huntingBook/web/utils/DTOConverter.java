@@ -5,10 +5,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AdministratorDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.MasterOfTheHunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.MasterOfTheHunter;
 
@@ -47,6 +49,10 @@ public class DTOConverter {
                 .filter(Objects::nonNull)
                 .map(acc -> DTOConverter.createAccountDTOFromEntity(acc))
                 .collect(Collectors.toList());
+    }
+
+    public static HuntDTO createHuntDTOFromEntity(Hunt huntToEnd) {
+        return null == huntToEnd ? null : new HuntDTO(huntToEnd.getId(), huntToEnd.getStartTime(), huntToEnd.getEndTime(), huntToEnd.getArea());
     }
 
 }

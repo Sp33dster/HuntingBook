@@ -11,6 +11,7 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AdministratorDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
@@ -260,6 +261,10 @@ public class AccountEndpoint {
 
     public String getMyLogin() throws IllegalStateException {
         return sxtx.getCallerPrincipal().getName();
+    }
+
+    public Hunter getMyHunterAccount() {
+        return accountFacade.findHunterLogin(getMyLogin());
     }
 
 }

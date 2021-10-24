@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import pl.lodz.p.it.spjava.e11.huntingBook.ejb.interceptor.LoggingInterceptor;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account_;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
@@ -68,6 +69,17 @@ public class AccountFacade extends AbstractFacade<Account> {
         query = query.where(criteria);
         TypedQuery<Account> tq = em.createQuery(query);
         return tq.getResultList();
+    }
+
+    public Hunter findHunterLogin(String myLogin) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Hunter> query = cb.createQuery(Hunter.class);
+        Root<Hunter> from = query.from(Hunter.class);
+        query = query.select(from);
+        query = query.where(cb.equal(from.get("login"), myLogin));
+        TypedQuery<Hunter> tq = em.createQuery(query);
+
+        return tq.getSingleResult();
     }
 
 }
