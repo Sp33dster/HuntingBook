@@ -1,5 +1,6 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.endpoint;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -18,7 +19,9 @@ import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.HuntFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.HuntManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.ResultManager;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Result;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
 
@@ -30,6 +33,9 @@ public class HuntEndpoint {
     @Inject
     HuntFacade huntFacade;
 
+    @Inject
+    AccountEndpoint accountEndpoint;
+    
     @Inject
     HuntManager huntManager;
 
@@ -94,8 +100,17 @@ public class HuntEndpoint {
        huntResult = resultEndpoint.addHuntResult(result);
        huntToEnd.setResult(huntResult);
        
-       huntManager.addNewHunt(huntToEnd);
-       
+       huntFacade.edit(huntToEnd);
+       huntToEnd = null;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public List<HuntDTO> getMyHunts() {
+        Hunter hunter = new Hunter();
+        hunter = accountEndpoint.getMyHunterAccount();
+        
+        
+        return DTOConverter.createHuntsDTOListFromEntity(huntFacade.getMyHunt(hunter));
     }
 
 }

@@ -55,4 +55,11 @@ public class DTOConverter {
         return null == huntToEnd ? null : new HuntDTO(huntToEnd.getId(), huntToEnd.getStartTime(), huntToEnd.getEndTime(), huntToEnd.getArea());
     }
 
+    public static List<HuntDTO> createHuntsDTOListFromEntity(List<Hunt> hunts) {
+        return null == hunts ? null : hunts.stream()
+                .filter(Objects::nonNull)
+                .map(hun -> DTOConverter.createHuntDTOFromEntity(hun))
+                .collect(Collectors.toList());
+    }
+
 }

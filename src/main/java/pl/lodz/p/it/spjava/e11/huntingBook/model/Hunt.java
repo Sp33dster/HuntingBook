@@ -24,6 +24,8 @@ public class Hunt extends AbstractEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
+    private boolean isEnded;
+
     @NotNull
     private String area;
 
@@ -39,6 +41,8 @@ public class Hunt extends AbstractEntity implements Serializable {
         this.startTime = startTime;
         this.area = area;
         this.hunterId = hunterId;
+        this.isEnded = false;
+
     }
 
     public Hunt(Date startTime, Date endTime, String area, Hunter hunterId) {
@@ -46,14 +50,24 @@ public class Hunt extends AbstractEntity implements Serializable {
         this.endTime = endTime;
         this.area = area;
         this.hunterId = hunterId;
+        this.isEnded = false;
     }
 
-    public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, Result resultId) {
+    public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, Result resultId, boolean isEnded) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.area = area;
         this.hunterId = hunterId;
         this.result = resultId;
+        this.isEnded = isEnded;
+    }
+
+    public boolean isIsEnded() {
+        return isEnded;
+    }
+
+    public void setIsEnded(boolean isEnded) {
+        this.isEnded = isEnded;
     }
 
     public String getArea() {

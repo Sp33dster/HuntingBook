@@ -11,7 +11,6 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AdministratorDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
@@ -28,7 +27,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.MasterOfTheHunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
-import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.AccountUtils;
+import pl.lodz.p.it.spjava.e11.huntingBook.security.SHA256HashGenerator;
 
 @Stateful
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -46,6 +45,9 @@ public class AccountEndpoint {
 
     @Inject
     private AdministratorFacade administratorFacade;
+
+    @Inject
+    private SHA256HashGenerator generator;
 
     @Resource(name = "txRetryLimit")
     private int txRetryLimit;
@@ -159,13 +161,6 @@ public class AccountEndpoint {
         return DTOConverter.createAccountDTOFromEntity(accountToEdit);
     }
 
-//    public void saveAccountAfterEdit(AccountDTO accountDTO) {
-//        accountToEdit.setName(accountDTO.getName());
-//        accountToEdit.setSurname(accountDTO.getSurname());
-//        accountToEdit.setEmail(accountDTO.getEmail());
-//        accountFacade.edit(accountToEdit);
-//        accountToEdit = null;
-//    }
     public void saveHunterAfterEdit(AccountDTO hunterDTO) throws AppBaseException {
         if (null == accountToEdit) {
             throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
@@ -215,7 +210,7 @@ public class AccountEndpoint {
 
         account.setIsActive(true);
 
-        account.setPassword(AccountUtils.createSHAOfPassword(accountDTO.getPassword()));
+        account.setPassword(generator.generateHash(accountDTO.getPassword()));
     }
 
     private void rewriteEditableDataToNewAccount(AccountDTO accountDTO, Account account) {
@@ -236,15 +231,15 @@ public class AccountEndpoint {
 
     public void changePassword(AccountDTO accountDTO, String password) {
         Account account = accountFacade.find(accountDTO.getId());
-        account.setPassword(AccountUtils.createSHAOfPassword(password));
+        account.setPassword(generator.generateHash(password));
     }
 
     public void changeMyPassword(String oldOne, String newOne) {
         Account myAccount = getMyAccount();
-        if (!myAccount.getPassword().equals(AccountUtils.createSHAOfPassword(oldOne))) {
+        if (!myAccount.getPassword().equals(generator.generateHash(oldOne))) {
             throw new IllegalArgumentException("Podane dotychczasowe hasło nie zgadza się");
         }
-        myAccount.setPassword(AccountUtils.createSHAOfPassword(newOne));
+        myAccount.setPassword(generator.generateHash(newOne));
     }
 
     public AccountDTO getMyAccountDTO() {

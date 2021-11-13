@@ -1,6 +1,7 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.web.hunt;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
@@ -10,6 +11,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.HuntEndpoint;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
 
 @SessionScoped
@@ -47,5 +49,9 @@ public class HuntController implements Serializable {
     public String endHunt(HuntDTO hunt, ResultDTO result) throws AppBaseException{
         huntEndpoint.endHunt(hunt, result);
         return "successHunt";
+    }
+
+    public List<HuntDTO> getMyHunts() {
+        return huntEndpoint.getMyHunts();
     }
 }

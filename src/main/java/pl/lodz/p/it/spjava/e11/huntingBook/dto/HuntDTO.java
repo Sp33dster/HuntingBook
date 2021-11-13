@@ -11,10 +11,39 @@ public class HuntDTO {
     private Date startTime;
 
     private Date endTime;
+    
+    private boolean isEnded;
+    
     @NotNull(message = "{constraint.notnull}")
     private String area;
 
+    private ResultDTO resultDTO;
+    
     public HuntDTO() {
+    }
+
+    public ResultDTO getResultDTO() {
+        return resultDTO;
+    }
+
+    public void setResultDTO(ResultDTO resultDTO) {
+        this.resultDTO = resultDTO;
+    }
+
+    public boolean getIsEnded() {
+        return isEnded;
+    }
+
+    public void setIsEnded(boolean isEnded) {
+        this.isEnded = isEnded;
+    }
+
+    public HuntDTO(Date startTime, Date endTime, String area, ResultDTO resultDTO, boolean isEnded) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.area = area;
+        this.resultDTO = resultDTO;
+        this.isEnded = isEnded;
     }
 
     public HuntDTO(Long id, Date startTime, String area) {

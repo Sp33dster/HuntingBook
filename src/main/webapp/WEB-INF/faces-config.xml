@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<faces-config version="2.3"
+<faces-config version="2.2"
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <application>
         <locale-config>
             <default-locale>pl</default-locale>
@@ -57,6 +57,16 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login/loginForm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginError</from-outcome>
+            <to-view-id>/login/loginFormError.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>changePassword</from-outcome>
             <to-view-id>/account/changePassword.xhtml</to-view-id>
             <redirect/>
@@ -80,6 +90,16 @@
         <navigation-case>
             <from-outcome>deleteSuccess</from-outcome>
             <to-view-id>/deleteSuccess.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addHunt</from-outcome>
+            <to-view-id>/hunt/addHunt.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>huntsList</from-outcome>
+            <to-view-id>/hunt/huntsList.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     

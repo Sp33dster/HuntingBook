@@ -2,12 +2,10 @@ package pl.lodz.p.it.spjava.e11.huntingBook.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,10 +40,10 @@ public class Hunter extends Account implements Serializable {
     private Hunt huntId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hunterId")
-    private Collection<Hunt> huntCollection;
+    private List<Hunt> huntCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hunterId")
-    private Collection<Cull> cullCollection;
+    private List<Cull> cullCollection;
 
     public Hunter() {
     }
@@ -100,7 +98,7 @@ public class Hunter extends Account implements Serializable {
         return huntCollection;
     }
 
-    public void setHuntCollection(Collection<Hunt> huntCollection) {
+    public void setHuntCollection(List<Hunt> huntCollection) {
         this.huntCollection = huntCollection;
     }
 
@@ -108,7 +106,7 @@ public class Hunter extends Account implements Serializable {
         return cullCollection;
     }
 
-    public void setCullCollection(Collection<Cull> cullCollection) {
+    public void setCullCollection(List<Cull> cullCollection) {
         this.cullCollection = cullCollection;
     }
 

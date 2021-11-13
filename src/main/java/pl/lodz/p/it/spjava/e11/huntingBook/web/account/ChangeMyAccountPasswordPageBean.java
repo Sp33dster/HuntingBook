@@ -13,7 +13,7 @@ public class ChangeMyAccountPasswordPageBean {
     @Inject
     private AccountController accountController;
     
-    private AccountDTO accountDTO = new AccountDTO();
+    private AccountDTO account = new AccountDTO();
     
     private String repeatPassword = "";
     
@@ -22,8 +22,8 @@ public class ChangeMyAccountPasswordPageBean {
     public ChangeMyAccountPasswordPageBean() {
     }
 
-    public AccountDTO getAccountDTO() {
-        return accountDTO;
+    public AccountDTO getAccount() {
+        return account;
     }
 
     public String getRepeatPassword() {
@@ -43,11 +43,11 @@ public class ChangeMyAccountPasswordPageBean {
     }
     
     public String changePassword(){
-        if(!(repeatPassword.equals(accountDTO.getPassword()))){
+        if(!(repeatPassword.equals(account.getPassword()))){
             ContextUtils.emitInternationalizedMessage("changeMyPasswordForm:passwordRepeat", "passwords.not.matching");
             return null;
         }
-        return accountController.changeMyPassword(oldPassword, accountDTO.getPassword());
+        return accountController.changeMyPassword(oldPassword, account.getPassword());
     }
     
 }

@@ -9,9 +9,9 @@ import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
 
 @Named
 @RequestScoped
-public class CreateHunterBean implements Serializable {
+public class CreateHunterPageBean implements Serializable {
 
-    public CreateHunterBean() {
+    public CreateHunterPageBean() {
     }
 
     @Inject

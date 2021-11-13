@@ -4,7 +4,6 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="../templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
 
@@ -18,7 +17,7 @@
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
-            <ui:param name="pageBean" value="#{createHunterBean}" />
+            <ui:param name="pageBean" value="#{createHunterPageBean}" />
             <h3>${msg['menu.accounts.createhunter']}</h3>
 
             <h:form id="createHunterForm">
