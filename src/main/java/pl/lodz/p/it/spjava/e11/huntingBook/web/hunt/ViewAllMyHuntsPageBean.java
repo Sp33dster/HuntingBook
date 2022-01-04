@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 
 @Named
 @ViewScoped
@@ -40,6 +41,14 @@ public class ViewAllMyHuntsPageBean implements Serializable {
 
     public void setHunts(List<HuntDTO> hunts) {
         this.hunts = hunts;
+    }
+
+    public String getHuntToAddResult() throws AppBaseException{
+        return huntController.getHuntToAddResult(huntDataModel.getRowData());
+    }
+
+    public String endHunt() {
+        return huntController.getHuntToEnd(huntDataModel.getRowData());
     }
 
 }

@@ -7,8 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,12 +19,8 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 
 @Entity
 @Table(name = "Result")
-public class Result implements Serializable {
-
-    @Id
-    @NotNull
-    @Column(name = "id")
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Result extends AbstractEntity implements Serializable {
 
     @Column(name = "is_private_use")
     private Boolean isPrivateUse;
@@ -43,24 +41,18 @@ public class Result implements Serializable {
     @Column(name = "animal_weight")
     private int animalWeight;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "result")
-    private Collection<Hunt> huntCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "result")
+    private Hunt huntID;
 
     public Result() {
     }
 
-    public Result(Long id) {
-        this.id = id;
-    }
-
-    public Result(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult) {
-        this.id = id;
+    public Result(Boolean isPrivateUse, TypeOfResult typeOfResult) {
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
     }
 
-    public Result(Long id, Boolean isPrivateUse, Boolean isConfirmed, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
-        this.id = id;
+    public Result(Boolean isPrivateUse, Boolean isConfirmed, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
         this.isPrivateUse = isPrivateUse;
         this.isConfirmed = isConfirmed;
         this.typeOfResult = typeOfResult;
@@ -74,14 +66,6 @@ public class Result implements Serializable {
 
     public void setIsConfirmed(Boolean isConfirmed) {
         this.isConfirmed = isConfirmed;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Boolean getIsPrivateUse() {
@@ -116,37 +100,12 @@ public class Result implements Serializable {
         this.animalWeight = animalWeight;
     }
 
-    public Collection<Hunt> getHuntCollection() {
-        return huntCollection;
+    public Hunt getHuntID() {
+        return huntID;
     }
 
-    public void setHuntCollection(Collection<Hunt> huntCollection) {
-        this.huntCollection = huntCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Result)) {
-            return false;
-        }
-        Result other = (Result) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "pl.lodz.p.it.spjava.e11.huntingBook.model.Result[ id=" + id + " ]";
+    public void setHuntID(Hunt huntID) {
+        this.huntID = huntID;
     }
 
 }

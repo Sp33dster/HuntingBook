@@ -1,19 +1,17 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.endpoint;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
 
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
-import pl.lodz.p.it.spjava.e11.huntingBook.exception.ResultException;
+import pl.lodz.p.it.spjava.e11.huntingBook.facade.HuntFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.ResultFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.ResultManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
@@ -29,6 +27,9 @@ public class ResultEndpoint {
     ResultFacade resultFacade;
 
     @Inject
+    HuntFacade huntFacade;
+
+    @Inject
     ResultManager resultManager;
 
     @Resource
@@ -41,8 +42,12 @@ public class ResultEndpoint {
 
     private Result huntResult;
 
-    public Result addHuntResult(ResultDTO resultDTO) throws AppBaseException {
+    public void addHuntResult(HuntDTO hunt, ResultDTO resultDTO) throws AppBaseException {
+        Hunt huntToAddResult = new Hunt();
+
         Result result = new Result();
+
+        huntToAddResult = huntFacade.find(hunt.getId());
 
         result.setTypeOfResult(resultDTO.getTypeOfResult());
         if (resultDTO.getTypeOfResult().equals(TypeOfResult.HIT)) {
@@ -51,25 +56,12 @@ public class ResultEndpoint {
             result.setIsPrivateUse(resultDTO.getIsPrivateUse());
             result.setIsConfirmed(Boolean.FALSE);
         }
-        boolean rollbackTX;
-        int retryTXCounter = txRetryLimit;
 
-        do {
-            try {
-                resultManager.addHuntResult(result);
-                rollbackTX = resultManager.isLastTransactionRollback();
-            } catch (AppBaseException | EJBTransactionRolledbackException ex) {
-                Logger.getGlobal().log(Level.SEVERE, "Próba " + retryTXCounter
-                        + " wykonania metody biznesowej zakończona wyjątkiem klasy:"
-                        + ex.getClass().getName());
-                rollbackTX = true;
-            }
+        huntToAddResult.setResult(result);
 
-        } while (rollbackTX && --retryTXCounter > 0);
+        huntFacade.edit(huntToAddResult);
 
-        if (rollbackTX && retryTXCounter == 0) {
-            throw ResultException.createResultExceptionWithTxRetryRollback();
-        }
-        return result;
+        huntToAddResult = null;
+        result = null;
     }
 }

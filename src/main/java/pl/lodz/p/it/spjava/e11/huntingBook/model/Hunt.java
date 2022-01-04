@@ -52,6 +52,14 @@ public class Hunt extends AbstractEntity implements Serializable {
         this.hunterId = hunterId;
         this.isEnded = false;
     }
+    
+    public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, boolean isEnded) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.area = area;
+        this.hunterId = hunterId;
+        this.isEnded = isEnded;
+    }
 
     public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, Result resultId, boolean isEnded) {
         this.startTime = startTime;

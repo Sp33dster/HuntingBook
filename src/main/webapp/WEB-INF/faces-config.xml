@@ -98,7 +98,17 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>addResult</from-outcome>
+            <to-view-id>/result/addResult.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>huntsList</from-outcome>
+            <to-view-id>/hunt/huntsList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>successHunt</from-outcome>
             <to-view-id>/hunt/huntsList.xhtml</to-view-id>
             <redirect/>
         </navigation-case>

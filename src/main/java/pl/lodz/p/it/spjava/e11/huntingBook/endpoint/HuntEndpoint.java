@@ -35,13 +35,13 @@ public class HuntEndpoint {
 
     @Inject
     AccountEndpoint accountEndpoint;
-    
+
     @Inject
     HuntManager huntManager;
 
     @Inject
     ResultEndpoint resultEndpoint;
-    
+
     @Inject
     ResultManager resultManager;
 
@@ -50,22 +50,23 @@ public class HuntEndpoint {
 
     @Resource(name = "txRetryLimit")
     private int txRetryLimit;
-    
+
     private Hunt huntToEnd;
-    
+
+    private Hunt huntToResult;
+
     private Result huntResult;
 
     public void addNewHunt(HuntDTO huntDTO) throws AppBaseException {
 
-               
         Hunt hunt = new Hunt();
-        
+
         hunt.setStartTime(huntDTO.getStartTime());
         hunt.setArea(huntDTO.getArea());
-        if (huntDTO.getEndTime()!=null) {
+        if (huntDTO.getEndTime() != null) {
             hunt.setEndTime(huntDTO.getEndTime());
         }
-        
+
         boolean rollbackTx;
         int retryTxCounter = txRetryLimit;
 
@@ -91,26 +92,28 @@ public class HuntEndpoint {
         return DTOConverter.createHuntDTOFromEntity(huntToEnd);
     }
 
-    public void endHunt(HuntDTO hunt, ResultDTO result) throws AppBaseException {
-       if (huntToEnd == null){
-           throw new IllegalArgumentException("Brak wczytanego polowania do modyfikacji");
-       }
-       
-       huntToEnd.setEndTime(hunt.getEndTime());
-       huntResult = resultEndpoint.addHuntResult(result);
-       huntToEnd.setResult(huntResult);
-       
-       huntFacade.edit(huntToEnd);
-       huntToEnd = null;
+    public HuntDTO getHuntToAddResult(HuntDTO hunt) {
+        huntToResult = huntFacade.getHunt(hunt.getId());
+        return DTOConverter.createHuntDTOFromEntity(huntToResult);
+
+    }
+    public void endHunt(HuntDTO hunt) throws AppBaseException {
+        if (huntToEnd == null) {
+            throw new IllegalArgumentException("Brak wczytanego polowania do modyfikacji");
+        }
+        huntToEnd.setEndTime(hunt.getEndTime());
+        huntToEnd.setIsEnded(Boolean.TRUE);
+        huntFacade.edit(huntToEnd);
+        huntToEnd = null;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<HuntDTO> getMyHunts() {
         Hunter hunter = new Hunter();
         hunter = accountEndpoint.getMyHunterAccount();
-        
-        
+
         return DTOConverter.createHuntsDTOListFromEntity(huntFacade.getMyHunt(hunter));
     }
+
 
 }

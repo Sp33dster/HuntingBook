@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <div class="card">
+            <p:tooltip/>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h3>${msg['menu.hunt.end']}</h3>
+
+            <h:form id="addResultForm">
+
+                <h:panelGrid id="grid" columns="2" cellpadding="7">
+
+                    <p:outputLabel value="#{msg['hunt.area']}" for="area" />
+                    <h:outputText id="area" value="#{addResultPageBean.hunt.area}" title="#{msg['hunt.area']}"/>
+                    <p:message for="area" />
+                    <p:outputLabel for="startTime" value="#{msg['hunt.start']}"/>
+                    <h:outputText id="startTime" value="#{addResultPageBean.hunt.startTime}" title="#{msg['hunt.start']}"/>
+                    <p:message for="startTime"/>
+
+
+                    <p:outputLabel value="TypeOfResult"/>
+                    <p:selectOneMenu id="typeOfResult" value="#{addResultPageBean.result.typeOfResult}" label="Always Show Label">
+                        <f:selectItems value="#{addResultPageBean.types}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="animalType"/>
+                    <p:selectOneMenu id="animalType" value="#{addResultPageBean.result.animalType}" label="AnimalType">
+                        <f:selectItems value="#{addResultPageBean.animalTypes}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{msg['hunt.animalWeight']}" for="weight" />
+                    <h:inputText id="weight" value="#{addResultPageBean.result.animalWeight}" title="#{msg['hunt.area']}"/>
+                    <p:message for="weight" />
+                    
+                    <p:selectBooleanCheckbox id="privateUse" disabled="true" value="#{addResultPageBean.result.isPrivateUse}" />  
+                    
+                </h:panelGrid>
+                <p:commandButton action="#{addResultPageBean.addResult()}" update="grid" value="${msg['hunt.endHunt']}"/>
+                <p:divider/>
+                <p:commandButton value="#{msg['action.cancel']}" action="main" immediate="true" />
+
+
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>
+

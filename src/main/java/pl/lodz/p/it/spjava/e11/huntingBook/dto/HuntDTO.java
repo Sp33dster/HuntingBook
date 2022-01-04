@@ -58,6 +58,14 @@ public class HuntDTO {
         this.endTime = endTime;
         this.area = area;
     }
+    
+    public HuntDTO(Long id, Date startTime, Date endTime, String area, boolean isEnded) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.area = area;
+        this.isEnded = isEnded;
+    }
 
     public String getArea() {
         return area;

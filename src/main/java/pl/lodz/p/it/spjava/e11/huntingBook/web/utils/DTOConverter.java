@@ -52,7 +52,7 @@ public class DTOConverter {
     }
 
     public static HuntDTO createHuntDTOFromEntity(Hunt huntToEnd) {
-        return null == huntToEnd ? null : new HuntDTO(huntToEnd.getId(), huntToEnd.getStartTime(), huntToEnd.getEndTime(), huntToEnd.getArea());
+        return null == huntToEnd ? null : new HuntDTO(huntToEnd.getId(), huntToEnd.getStartTime(), huntToEnd.getEndTime(), huntToEnd.getArea(), huntToEnd.isIsEnded());
     }
 
     public static List<HuntDTO> createHuntsDTOListFromEntity(List<Hunt> hunts) {

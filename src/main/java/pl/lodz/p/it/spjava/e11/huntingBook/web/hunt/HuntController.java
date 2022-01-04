@@ -6,14 +6,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.HuntEndpoint;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
 
+@Named
 @SessionScoped
 public class HuntController implements Serializable {
 
@@ -21,9 +21,19 @@ public class HuntController implements Serializable {
 
     @Inject
     private HuntEndpoint huntEndpoint;
-    
-    private HuntDTO huntToEnd;
 
+    private HuntDTO endHunt;
+    
+    private HuntDTO resultHunt;
+
+    public HuntDTO getEndHunt() {
+        return endHunt;
+    }
+
+    public HuntDTO getResultHunt() {
+        return resultHunt;
+    }
+ 
     public String addNewHunt(HuntDTO hunt) {
         try {
             huntEndpoint.addNewHunt(hunt);
@@ -40,18 +50,24 @@ public class HuntController implements Serializable {
             return null;
         }
     }
-    
-    public String getHuntToEnd(HuntDTO hunt){
-        huntToEnd = huntEndpoint.getHuntToEnd(hunt);
-        return "endHunt";
+   
+    public String getHuntToAddResult(HuntDTO hunt){
+        resultHunt = huntEndpoint.getHuntToAddResult(hunt);
+        return "addResult";
     }
 
-    public String endHunt(HuntDTO hunt, ResultDTO result) throws AppBaseException{
-        huntEndpoint.endHunt(hunt, result);
-        return "successHunt";
+    public String getHuntToEnd(HuntDTO hunt) {
+        endHunt = huntEndpoint.getHuntToEnd(hunt);
+        return "endHunt";
     }
 
     public List<HuntDTO> getMyHunts() {
         return huntEndpoint.getMyHunts();
     }
+
+    public String endHunt(HuntDTO hunt) throws AppBaseException {
+        huntEndpoint.endHunt(hunt);
+        return "successHunt";
+    }
+
 }

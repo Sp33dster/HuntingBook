@@ -5,8 +5,7 @@
                 template="../templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://java.sun.com/jsp/jstl/core">
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="top">
         <ui:include src="../templates/menu.xhtml"/>
     </ui:define>
@@ -15,7 +14,7 @@
         <h3>${msg['menu.hunt.myHunts']}</h3>
         <h:form id="huntsListForm">
             <h:messages for="huntsList"/>
-            
+
             <p:dataTable id="huntsList" var="row" value="#{viewAllMyHuntsPageBean.huntDataModel}">
                 <p:column id="area" headerText="${msg['hunt.area']}">
                     <h:outputText value="#{row.area}" />
@@ -27,27 +26,19 @@
                     <f:facet name="header">${msg['hunt.end']}</f:facet>
                     <h:outputText value="#{row.endTime}" />
                 </p:column>
-                
-                
-                
-                <p:column id="type">
-                    <f:facet name="header">${msg['account.type']}</f:facet>
-                    <ui:param name="accountType" value="#{row.type}" />
-                    <h:outputText value="${msg[accountType]}" />
+
+                <p:column id="isEnded" headerText="${msg['hunt.isEnded']}">
+                    <h:outputText value="  ${msg['hunt.notEnded']}" rendered="#{not row.isEnded}"/>
+                    <h:outputText value="  ${msg['hunt.ended']}" rendered="#{row.isEnded}"/>
                 </p:column>
 
                 <p:column id="result" headerText="${msg['hunt.result']}">
-
-                     
-                    <h:outputText value="  ${msg['hunt.notEnded']}" rendered="#{not row.isEnded}"/>
-                    <h:outputText value="  ${msg['account.notactive']}" rendered="#{null == row.resultDTO && row.isEnded}"/>
+                    <h:outputText value="#{row.resultDTO.animalType}" rendered="#{not (empty row.resultDTO.id)}"/>
+                    <h:outputText value="  ${msg['hunt.noResult']}" rendered="#{empty row.resultDTO.id}"/>
                 </p:column>
                 <p:column id="actions" headerText="${msg['general.actions']}">
-                    <p:commandButton action="#{accountsListPageBean.editAccount()}" value="${msg['menu.accounts.edit']}" styleClass="rounded-button"/>
-                    <p:commandButton action="#{accountsListPageBean.startChangingPassword()}" value="${msg['menu.accounts.changePassword']}" styleClass="rounded-button"/>
-                    <p:commandButton action="#{accountsListPageBean.activateAccount()}" value="${msg['action.activate']}" update="accountList"  rendered="#{not row.isActive}" styleClass="rounded-button ui-button-success"/>
-                    <p:commandButton action="#{accountsListPageBean.deactivateAccount()}" value="${msg['action.deactivate']}" update="accountList" rendered="#{row.isActive}" styleClass="rounded-button ui-button-warning"/>
-                    <p:commandButton action="#{accountsListPageBean.deleteAccount()}" value="${msg['action.delete']}" styleClass="rounded-button ui-button-danger"/>
+                    <p:commandButton action="#{viewAllMyHuntsPageBean.endHunt()}"  value="${msg['zakończpolowanie']}"  rendered="#{not row.isEnded}" styleClass="rounded-button"/>
+                    <p:commandButton action="#{viewAllMyHuntsPageBean.getHuntToAddResult()}"  value="${msg['dodajRezultat']}" rendered="#{row.resultDTO.id eq null}" styleClass="rounded-button"/>
                 </p:column>
             </p:dataTable>
         </h:form>
