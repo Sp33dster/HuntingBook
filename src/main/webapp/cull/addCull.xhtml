@@ -15,52 +15,41 @@
             <p:tooltip/>
             <h:form id="addCull">
                 <p:growl id="msgs" showDetail="true"/>
+                
+                    <div class="p-field p-col-12 p-md-4">
+                        <p:outputLabel for="startDate" value="#{msg['hunt.start']} "/>
+                        <p:datePicker id="startDate" value="#{addCullPageBean.cull.startDate}" />
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <p:outputLabel for="endDate" value="#{msg['hunt.start']} "/>
+                        <p:datePicker id="endDate" value="#{addCullPageBean.cull.endDate}" />
+                    </div>
+                    
 
+                    <p:dataTable id="cullDetails" widgetVar="cullDetails" var="detail" value="#{addCullPageBean.cullDetails}"
+                                 editable="true" editMode="cell" editInitEvent="dblclick">
+                        <f:facet name="header">
+                            Row Editing with add functionality
+                        </f:facet>
 
+                        <p:column headerText="Animal">
+                            <h:outputText value="#{detail.animal}"/>                                                                       
+                        </p:column>
+                        <p:column headerText="Quantity">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{detail.quantity}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="modelInput" value="#{detail.quantity}"
+                                                 style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                <div class="p-field p-col-12 p-md-4">
-                    <p:outputLabel for="startDate" value="#{msg['hunt.start']} "/>
-                    <p:datePicker id="startDate" value="#{addCullPageBean.cull.startDate}" />
-                </div>
-                <div class="p-field p-col-12 p-md-4">
-                    <p:outputLabel for="endDate" value="#{msg['hunt.start']} "/>
-                    <p:datePicker id="endDate" value="#{addCullPageBean.cull.endDate}" />
-                </div>
-                <p:outputLabel for="@next" value="hunter"/>
-                <p:selectOneMenu id="hunter" value="#{addCullPageBean.cull.hunter}" label="Myśliwy">
-                    <f:selectItems value="#{addCullPageBean.activeHunters}"/>
-                </p:selectOneMenu>
-
-                <p:dataTable id="cullDetails" widgetVar="cullDetails" var="detail" value="#{addCullPageBean.cullDetails}"
-                             editable="true" editMode="cell" editInitEvent="dblclick">
-                    <f:facet name="header">
-                        Row Editing with add functionality
-                    </f:facet>
-
-                    <p:column headerText="Animal">
-                        <h:outputText value="#{detail.animal}"/>                                                                       
-                    </p:column>
-                    <p:column headerText="Quantity">
-                        <p:cellEditor>
-                            <f:facet name="output">
-                                <h:outputText value="#{detail.quantity}"/>
-                            </f:facet>
-                            <f:facet name="input">
-                                <p:inputText id="modelInput" value="#{detail.quantity}"
-                                             style="width:100%"/>
-                            </f:facet>
-                        </p:cellEditor>
-                    </p:column>
-
-                    <p:column style="width:6rem">
-                        <p:rowEditor/>
-                    </p:column>
-                </p:dataTable>
-
-
-                <p:divider/>
-                <p:commandButton action="#{addCullPageBean.addCull}"  value="${msg['action.create']}"/>
-
+                    </p:dataTable>
+                                <p:divider/>
+                <p:commandButton action="#{addCullPageBean.addCull()}" update="addCull" value="${msg['action.create']}"/>
 
             </h:form>
         </div>

@@ -270,4 +270,8 @@ public class AccountEndpoint {
         return DTOConverter.createAccountDTOListFromEntity(accountFacade.findHunters());
     }
 
+    public AccountDTO getHunterToAddCull(AccountDTO hunter) {
+        return DTOConverter.createAccountDTOFromEntity(accountFacade.find(hunter.getId()));
+    }
+
 }

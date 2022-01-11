@@ -33,6 +33,7 @@ public class AccountController implements Serializable {
     private AccountDTO editAccount;
 
     private AccountDTO accountToChangePassword;
+    private AccountDTO hunterToAddCull;
 
     public AccountDTO getEditAccount() {
         return editAccount;
@@ -42,6 +43,11 @@ public class AccountController implements Serializable {
         return accountToChangePassword;
     }
 
+    public AccountDTO getHunterToAddCull() {
+        return hunterToAddCull;
+    }
+
+    
     public String createHunter(HunterDTO hunterDTO) {
         try {
             LOG.log(Level.INFO, "Zgłoszenie akcji createHunter (" + ContextUtils.getUserAddress() + ")");
@@ -197,4 +203,10 @@ public class AccountController implements Serializable {
     public List<AccountDTO> findHunterAccount() {
         return accountEndpoint.findHunters();
     }
+
+    String getHunterToAddCull(AccountDTO hunter) {
+        hunterToAddCull = accountEndpoint.getHunterToAddCull(hunter);
+        return "addCull";
+    }
+
 }

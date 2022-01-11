@@ -37,7 +37,9 @@
                     <h:outputText value="  ${msg['account.active']}" rendered="#{row.isActive}"/>
                     <h:outputText value="  ${msg['account.notactive']}" rendered="#{not row.isActive}"/>
                 </p:column>
-
+                <p:column id="actions" headerText="${msg['general.actions']}">                 
+                    <p:commandButton action="#{huntersListPageBean.getHunterToAddCull()}" value="${msg['action.deactivate']}" update="hunterList" rendered="#{row.isActive}" styleClass="rounded-button"/>         
+                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

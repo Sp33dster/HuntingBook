@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDetailsDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.CullEndpoint;
@@ -24,10 +25,10 @@ public class CullController implements Serializable {
 
     private CullDTO cullDTO;
 
-    public String add(CullDTO cull, List<CullDetailsDTO> cullDetails) {
+    public String add(CullDTO cull, List<CullDetailsDTO> cullDetails, AccountDTO hunter) {
         try {
             LOGGER.log(Level.INFO, "Zgłoszenie akcji addCull (" + ContextUtils.getUserAddress() + ")");
-            cullEndpoint.addCull(cullDTO, cullDetails);
+            cullEndpoint.addCull(cull, cullDetails, hunter);
             return "success";
         } catch (AppBaseException ex) {
             Logger lg = Logger.getLogger(CullController.class

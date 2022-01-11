@@ -20,11 +20,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Cull")
 public class Cull extends AbstractEntity implements Serializable {
 
-    @Id
-    @NotNull
-    @Column(name = "id")
-    private Long id;
-
     @NotNull
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
@@ -48,15 +43,22 @@ public class Cull extends AbstractEntity implements Serializable {
     public Cull() {
     }
 
-    public Cull(Long id) {
-        this.id = id;
-    }
-
-    public Cull(Long id, Date startDate, Date endDate, List<CullDetails> cullCollection) {
-        this.id = id;
+    public Cull(Date startDate, Date endDate, List<CullDetails> cullCollection) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.cullDetails = cullCollection;
+    }
+
+    public Cull(Date startDate, Date endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Cull(Date startDate, Date endDate, List<CullDetails> cullDetails, Hunter hunterId) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.cullDetails = cullDetails;
+        this.hunterId = hunterId;
     }
 
     public List<CullDetails> getCullDetails() {
@@ -65,14 +67,6 @@ public class Cull extends AbstractEntity implements Serializable {
 
     public void setCullDetails(List<CullDetails> cullDetails) {
         this.cullDetails = cullDetails;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Date getStartDate() {

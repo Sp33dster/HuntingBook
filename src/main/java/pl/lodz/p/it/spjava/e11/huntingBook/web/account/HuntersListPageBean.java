@@ -45,5 +45,8 @@ public class HuntersListPageBean implements Serializable {
         initModel();
     }
 
+    public String getHunterToAddCull(){
+        return accountController.getHunterToAddCull(accountDataModel.getRowData());
+    }
     
 }

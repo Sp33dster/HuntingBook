@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -14,7 +13,6 @@ import org.primefaces.event.RowEditEvent;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDetailsDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.account.AccountController;
@@ -31,7 +29,7 @@ public class AddCullPageBean implements Serializable {
 
     private CullDTO cull = new CullDTO();
 
-    private HunterDTO hunter;
+    private AccountDTO hunter;
 
     private List<AnimalType> animalTypes = new ArrayList<>();
 
@@ -41,15 +39,13 @@ public class AddCullPageBean implements Serializable {
 
     @PostConstruct
     private void init() {
-        activeHunters = hunterController.getActiveHuntersList();
+        hunter = hunterController.getHunterToAddCull();
 
+//        activeHunters = hunterController.getActiveHuntersList();
         for (AnimalType animal : AnimalType.values()) {
-            animalTypes.add(animal);
-        }
-        for (AnimalType animal : AnimalType.values()){
             cullDetails.add(new CullDetailsDTO(animal, 0));
         }
-        
+
     }
 
     public CullController getCullController() {
@@ -92,11 +88,11 @@ public class AddCullPageBean implements Serializable {
         this.animalTypes = animalTypes;
     }
 
-    public HunterDTO getHunter() {
+    public AccountDTO getHunter() {
         return hunter;
     }
 
-    public void setHunter(HunterDTO hunter) {
+    public void setHunter(AccountDTO hunter) {
         this.hunter = hunter;
     }
 
@@ -106,7 +102,7 @@ public class AddCullPageBean implements Serializable {
     }
 
     public String addCull() throws AppBaseException {
-        return cullController.add(cull, cullDetails);
+        return cullController.add(cull, cullDetails, hunter);
     }
 
     public void onRowEdit(RowEditEvent<CullDetailsDTO> event) {
