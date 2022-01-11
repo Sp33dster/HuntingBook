@@ -42,6 +42,11 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>huntersList</from-outcome>
+            <to-view-id>/account/hunterList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>createHunter</from-outcome>
             <to-view-id>/account/createHunter.xhtml</to-view-id>
             <redirect/>
@@ -90,6 +95,11 @@
         <navigation-case>
             <from-outcome>deleteSuccess</from-outcome>
             <to-view-id>/deleteSuccess.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addCull</from-outcome>
+            <to-view-id>/cull/addCull.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

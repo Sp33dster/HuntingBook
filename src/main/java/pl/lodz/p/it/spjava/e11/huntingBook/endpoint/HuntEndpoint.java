@@ -17,6 +17,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.HuntFacade;
+import pl.lodz.p.it.spjava.e11.huntingBook.facade.ResultFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.HuntManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.ResultManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
@@ -32,6 +33,9 @@ public class HuntEndpoint {
 
     @Inject
     HuntFacade huntFacade;
+    
+    @Inject
+    ResultFacade resultFacade;
 
     @Inject
     AccountEndpoint accountEndpoint;
@@ -115,5 +119,21 @@ public class HuntEndpoint {
         return DTOConverter.createHuntsDTOListFromEntity(huntFacade.getMyHunt(hunter));
     }
 
+    public void confirmResult(HuntDTO hunt) {
+        Hunt huntToConfirmResult = new Hunt();
+        Result result = new Result();
+        
+        huntToConfirmResult = huntFacade.getHunt(hunt.getId());
+        result = resultFacade.find(huntToConfirmResult.getResult().getId());
+        
+        result.setIsConfirmed(Boolean.TRUE);
+        
+        huntToConfirmResult.setResult(result);
+        
+        huntFacade.edit(huntToConfirmResult);
+        
+        result = null;
+        huntToConfirmResult = null;
+     }
 
 }

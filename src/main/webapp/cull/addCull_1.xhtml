@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <div class="card">
+            <p:tooltip/>
+            <h:form id="addCull">
+                <p:growl id="msgs" showDetail="true"/>
+
+
+
+                <div class="p-field p-col-12 p-md-4">
+                    <p:outputLabel for="startDate" value="#{msg['hunt.start']} "/>
+                    <p:datePicker id="startDate" value="#{addCullPageBean.cull.startDate}" />
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <p:outputLabel for="endDate" value="#{msg['hunt.start']} "/>
+                    <p:datePicker id="endDate" value="#{addCullPageBean.cull.endDate}" />
+                </div>
+                <p:outputLabel for="@next" value="hunter"/>
+                <p:selectOneMenu id="hunter" value="#{addCullPageBean.cull.hunter}" label="Myśliwy">
+                    <f:selectItems value="#{addCullPageBean.activeHunters}"/>
+                </p:selectOneMenu>
+
+                <p:dataTable id="cullDetails" widgetVar="cullDetails" var="detail" value="#{addCullPageBean.cullDetails}"
+                             editable="true">
+                    <f:facet name="header">
+                        Row Editing with add functionality
+                    </f:facet>
+
+                    
+
+                    <p:column headerText="Animal">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{detail.animal}"/></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{detail.animal}" style="width:100%">
+                                    <f:selectItems value="#{addCullPageBean.animalTypes}" var="animal"
+                                                   itemLabel="#{animal}" itemValue="#{animal}"/>
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Quantity">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{detail.quantity}"/></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{detail.quantity}"
+                                                               style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:6rem">
+                        <p:rowEditor/>
+                    </p:column>
+                </p:dataTable>
+
+                <div class="p-grid p-mt-3">
+                    <div class="p-col-12">
+                        <p:commandButton value="Add new row" process="@this" 
+                                         action="#{addCullPageBean.onAddNew()}" oncomplete="PF('cullDetails').addRow();"/>
+                    </div>
+                </div>
+                <p:divider/>
+                <p:commandButton action="#{addCullPageBean.addCull()}" value="${msg['action.create']}"/>
+
+
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

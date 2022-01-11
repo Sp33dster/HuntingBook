@@ -15,8 +15,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import pl.lodz.p.it.spjava.e11.huntingBook.ejb.interceptor.LoggingInterceptor;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.Account_;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AccountType;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
@@ -41,7 +41,7 @@ public class AccountFacade extends AbstractFacade<Account> {
         CriteriaQuery<Account> query = cb.createQuery(Account.class);
         Root<Account> from = query.from(Account.class);
         query = query.select(from);
-        query = query.where(cb.equal(from.get(Account_.login), login));
+        query = query.where(cb.equal(from.get("login"), login));
         TypedQuery<Account> tq = em.createQuery(query);
 
         return tq.getSingleResult();
@@ -54,16 +54,16 @@ public class AccountFacade extends AbstractFacade<Account> {
         query = query.select(from);
         Predicate criteria = cb.conjunction();
         if (null != login && !(login.isEmpty())) {
-            criteria = cb.and(criteria, cb.like(from.get(Account_.login), '%' + login + '%'));
+            criteria = cb.and(criteria, cb.like(from.get("login"), '%' + login + '%'));
         }
         if (null != name && !(name.isEmpty())) {
-            criteria = cb.and(criteria, cb.like(from.get(Account_.name), '%' + name + '%'));
+            criteria = cb.and(criteria, cb.like(from.get("name"), '%' + name + '%'));
         }
         if (null != surname && !(surname.isEmpty())) {
-            criteria = cb.and(criteria, cb.like(from.get(Account_.surname), '%' + surname + '%'));
+            criteria = cb.and(criteria, cb.like(from.get("surname"), '%' + surname + '%'));
         }
         if (null != email && !(email.isEmpty())) {
-            criteria = cb.and(criteria, cb.like(from.get(Account_.email), '%' + email + '%'));
+            criteria = cb.and(criteria, cb.like(from.get("email"), '%' + email + '%'));
         }
 
         query = query.where(criteria);
@@ -80,6 +80,34 @@ public class AccountFacade extends AbstractFacade<Account> {
         TypedQuery<Hunter> tq = em.createQuery(query);
 
         return tq.getSingleResult();
+    }
+
+    public List<Account> findActiveHunters() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Account> query = cb.createQuery(Account.class);
+        Root<Account> from = query.from(Account.class);
+        query = query.select(from);
+
+        Predicate[] predicates = new Predicate[2];
+        predicates[0] = cb.equal(from.get("type"), AccountType.HUNTER);
+        predicates[1] = cb.equal(from.get("isActive"), Boolean.TRUE);
+        query = query.where(predicates);
+
+        TypedQuery<Account> tq = em.createQuery(query);
+
+        return tq.getResultList();
+    }
+
+    public List<Account> findHunters() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Account> query = cb.createQuery(Account.class);
+        Root<Account> from = query.from(Account.class);
+        query = query.select(from);
+        query = query.where(cb.equal(from.get("type"), AccountType.HUNTER));
+
+        TypedQuery<Account> tq = em.createQuery(query);
+
+        return tq.getResultList();
     }
 
 }

@@ -75,7 +75,7 @@ public class HunterDTO extends AccountDTO {
 
     @Override
     public String toString() {
-        return "HunterDTO{" + super.toString() + "pesel=" + pesel + ", phoneNumber=" + phoneNumber + ", isHunting=" + isHunting + ", listOfCull=" + listOfCull + ", listOfHunt=" + listOfHunt + '}';
+        return super.toString();
     }
 
 }

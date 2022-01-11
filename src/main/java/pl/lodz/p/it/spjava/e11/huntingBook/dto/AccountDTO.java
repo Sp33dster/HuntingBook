@@ -109,7 +109,7 @@ public class AccountDTO {
 
     @Override
     public String toString() {
-        return "AccountDTO{" + "login=" + login + ", isActive=" + isActive + ", name=" + name + ", surname=" + surname + ", email=" + email + ", type=" + type + '}';
+        return name + " " + surname;
     }
 
 }

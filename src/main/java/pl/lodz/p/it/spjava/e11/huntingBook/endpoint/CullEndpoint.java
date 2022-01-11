@@ -1,5 +1,7 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.endpoint;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -9,44 +11,52 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDetailsDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.CullException;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.CullFacade;
+import pl.lodz.p.it.spjava.e11.huntingBook.facade.HunterFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.CullManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Cull;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.CullDetails;
-
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 
 @Stateful
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class CullEndpoint {
-    
+
     @Inject
     CullManager cullManager;
-    
+
     @Inject
     CullFacade cullFacade;
 
+    @Inject
+    HunterFacade hunterFacede;
+
     @Resource(name = "txRetryLimit")
     private int txRetryLimit;
-    
-    public void addCull(CullDTO cullDTO) throws AppBaseException {
-        
-        Cull cull = new Cull();
 
+    public void addCull(CullDTO cullDTO, List<CullDetailsDTO> cullDetailsDTO) throws AppBaseException {
+        Hunter hunter = new Hunter();
+        Cull cull = new Cull();
+        List<CullDetails> cullDetailsList = new ArrayList<>();
+        hunter = (Hunter) hunterFacede.find(cullDTO.getHunter());
+        cull.setHunterId(hunter);
         cull.setStartDate(cullDTO.getStartDate());
         cull.setEndDate(cullDTO.getEndDate());
         for (CullDetailsDTO cullDetailDTO : cullDTO.getCullDetails()) {
-           CullDetails  cullDetails = new CullDetails();
-           cullDetails.setAnimal(cullDetailDTO.getAnimal());
-           cullDetails.setQuantity(cullDetailDTO.getQuantity());
-           
-           cull.getCullDetails().add(cullDetails);
+            CullDetails cullDetail = new CullDetails();
+            cullDetail.setAnimal(cullDetailDTO.getAnimal());
+            cullDetail.setQuantity(cullDetailDTO.getQuantity());
+
+            cullDetailsList.add(cullDetail);
         }
 
+        cull.setCullDetails(cullDetailsList);
 
         boolean rollbackTX;
         int retryTXCounter = txRetryLimit;
@@ -68,8 +78,5 @@ public class CullEndpoint {
             throw CullException.createCullExceptionWithTxRetryRollback();
         }
     }
-            
-            
-    
-    
+
 }

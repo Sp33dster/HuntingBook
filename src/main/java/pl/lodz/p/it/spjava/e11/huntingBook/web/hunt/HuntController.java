@@ -70,4 +70,9 @@ public class HuntController implements Serializable {
         return "successHunt";
     }
 
+    public void confirmResult(HuntDTO hunt) {
+        huntEndpoint.confirmResult(hunt);
+        //TODO emitSuccessMessage();
+    }
+
 }

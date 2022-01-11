@@ -33,13 +33,24 @@
                 </p:column>
 
                 <p:column id="result" headerText="${msg['hunt.result']}">
-                    <h:outputText value="#{row.resultDTO.animalType}" rendered="#{not (empty row.resultDTO.id)}"/>
-                    <h:outputText value="  ${msg['hunt.noResult']}" rendered="#{empty row.resultDTO.id}"/>
+                    <h:outputText value="#{row.resultDTO.animalType}" />
+                
+                </p:column>
+                <p:column id="resultWeight" headerText="${msg['hunt.result']}">
+                    <h:outputText value="#{row.resultDTO.animalWeight}" />
+                
+                </p:column>
+                <p:column id="state" headerText="${msg['account.state']}">
+
+                    <p:selectBooleanCheckbox id="confirmed" disabled="true" value="#{row.resultDTO.isConfirmed}" />  
+                    <h:outputText value="  ${msg['account.active']}" rendered="#{row.resultDTO.isConfirmed}"/>
+                    <h:outputText value="  ${row.resultDTO.isConfirmed}" rendered="#{not row.resultDTO.isConfirmed}"/>
                 </p:column>
                 <p:column id="actions" headerText="${msg['general.actions']}">
                     <p:commandButton action="#{viewAllMyHuntsPageBean.endHunt()}"  value="${msg['zakończpolowanie']}"  rendered="#{not row.isEnded}" styleClass="rounded-button"/>
                     <p:commandButton action="#{viewAllMyHuntsPageBean.getHuntToAddResult()}"  value="${msg['dodajRezultat']}" rendered="#{row.resultDTO.id eq null}" styleClass="rounded-button"/>
-                </p:column>
+                    <p:commandButton action="#{viewAllMyHuntsPageBean.confirmResult()}" value="${msg['action.activate']}" update="huntsList"  rendered="#{not row.resultDTO.isConfirmed}" styleClass="rounded-button ui-button-success"/>
+                    </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

@@ -27,6 +27,14 @@ public class ResultDTO {
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
     }
+    
+    public ResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
+        this.id = id;
+        this.isPrivateUse = isPrivateUse;
+        this.typeOfResult = typeOfResult;
+        this.animalType = animalType;
+        this.animalWeight = animalWeight;
+    }
 
     public ResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight, Boolean isConfirmed) {
         this.id = id;

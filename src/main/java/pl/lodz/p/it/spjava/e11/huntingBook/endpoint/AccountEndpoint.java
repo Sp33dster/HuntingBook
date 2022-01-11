@@ -262,4 +262,12 @@ public class AccountEndpoint {
         return accountFacade.findHunterLogin(getMyLogin());
     }
 
+    public List<AccountDTO> getActiveHuntersList() {
+        return DTOConverter.createAccountDTOListFromEntity(accountFacade.findActiveHunters());
+    }
+
+    public List<AccountDTO> findHunters() {
+        return DTOConverter.createAccountDTOListFromEntity(accountFacade.findHunters());
+    }
+
 }

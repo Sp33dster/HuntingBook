@@ -174,19 +174,27 @@ public class AccountController implements Serializable {
         accountEndpoint.changeMyPassword(oldPassword, newPassword);
         return "success";
     }
-    
+
     @PostConstruct
-    private void init(){
+    private void init() {
         LOG.severe("Session started: " + ContextUtils.getSessionID());
     }
-    
-    public String invalidateSession(){
+
+    public String invalidateSession() {
         ContextUtils.invalidateSession();
         return "cancelAction";
-        
+
     }
-    
-    public String getMyLogin(){
+
+    public String getMyLogin() {
         return ContextUtils.getUserName();
+    }
+
+    public List<AccountDTO> getActiveHuntersList() {
+        return accountEndpoint.getActiveHuntersList();
+    }
+
+    public List<AccountDTO> findHunterAccount() {
+        return accountEndpoint.findHunters();
     }
 }

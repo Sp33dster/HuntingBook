@@ -44,7 +44,7 @@
                     <h:inputText id="weight" value="#{addResultPageBean.result.animalWeight}" title="#{msg['hunt.area']}"/>
                     <p:message for="weight" />
                     
-                    <p:selectBooleanCheckbox id="privateUse" disabled="true" value="#{addResultPageBean.result.isPrivateUse}" />  
+                    <p:selectBooleanCheckbox id="privateUse" itemLabel="isPrivateUse" value="#{addResultPageBean.result.isPrivateUse}" />  
                     
                 </h:panelGrid>
                 <p:commandButton action="#{addResultPageBean.addResult()}" update="grid" value="${msg['hunt.endHunt']}"/>

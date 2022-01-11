@@ -2,6 +2,7 @@ package pl.lodz.p.it.spjava.e11.huntingBook.dto;
 
 import java.util.Date;
 import javax.validation.constraints.NotNull;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Result;
 
 public class HuntDTO {
 
@@ -11,14 +12,14 @@ public class HuntDTO {
     private Date startTime;
 
     private Date endTime;
-    
+
     private boolean isEnded;
-    
+
     @NotNull(message = "{constraint.notnull}")
     private String area;
 
     private ResultDTO resultDTO;
-    
+
     public HuntDTO() {
     }
 
@@ -38,12 +39,13 @@ public class HuntDTO {
         this.isEnded = isEnded;
     }
 
-    public HuntDTO(Date startTime, Date endTime, String area, ResultDTO resultDTO, boolean isEnded) {
+    public HuntDTO(Long id, Date startTime, Date endTime, String area, boolean isEnded, ResultDTO resultDTO) {
+        this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.area = area;
-        this.resultDTO = resultDTO;
         this.isEnded = isEnded;
+        this.resultDTO = resultDTO;
     }
 
     public HuntDTO(Long id, Date startTime, String area) {
@@ -58,7 +60,7 @@ public class HuntDTO {
         this.endTime = endTime;
         this.area = area;
     }
-    
+
     public HuntDTO(Long id, Date startTime, Date endTime, String area, boolean isEnded) {
         this.id = id;
         this.startTime = startTime;

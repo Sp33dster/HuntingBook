@@ -8,11 +8,13 @@ import pl.lodz.p.it.spjava.e11.huntingBook.dto.AdministratorDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HunterDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.MasterOfTheHunterDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Administrator;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.MasterOfTheHunter;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Result;
 
 public class DTOConverter {
 
@@ -43,7 +45,7 @@ public class DTOConverter {
     private static AdministratorDTO createAdministratorDTOFromEntity(Administrator admin) {
         return null == admin ? null : new AdministratorDTO(admin.getAlarmNumber(), admin.getId(), admin.getLogin(), admin.getIsActive(), admin.getName(), admin.getSurname(), admin.getEmail(), admin.getType());
     }
-
+    
     public static List<AccountDTO> createAccountDTOListFromEntity(List<Account> accounts) {
         return null == accounts ? null : accounts.stream()
                 .filter(Objects::nonNull)
@@ -51,8 +53,12 @@ public class DTOConverter {
                 .collect(Collectors.toList());
     }
 
-    public static HuntDTO createHuntDTOFromEntity(Hunt huntToEnd) {
-        return null == huntToEnd ? null : new HuntDTO(huntToEnd.getId(), huntToEnd.getStartTime(), huntToEnd.getEndTime(), huntToEnd.getArea(), huntToEnd.isIsEnded());
+    public static HuntDTO createHuntDTOFromEntity(Hunt hunt) {
+        return null == hunt ? null : new HuntDTO(hunt.getId(), hunt.getStartTime(), hunt.getEndTime(), hunt.getArea(), hunt.isIsEnded(), DTOConverter.createResultDTOFromEntity(hunt.getResult()));
+    }
+    
+    public static ResultDTO createResultDTOFromEntity(Result result){
+        return null == result ? null : new ResultDTO(result.getId(), result.getIsPrivateUse(), result.getTypeOfResult(), result.getAnimalType(), result.getAnimalWeight(), result.getIsConfirmed());
     }
 
     public static List<HuntDTO> createHuntsDTOListFromEntity(List<Hunt> hunts) {

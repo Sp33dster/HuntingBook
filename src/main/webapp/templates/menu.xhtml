@@ -26,7 +26,7 @@
                         <p:menuitem value="${msg['ADMINISTRATOR']}" outcome="createAdmin"/>
                     </p:submenu>
                     <p:menuitem value="${msg['menu.accounts.list']}" outcome="accountsList"/>
-                    <p:menuitem value="Wyświetl listę kont myśliwych"/>
+                    <p:menuitem value="Wyświetl listę kont myśliwych" outcome="huntersList"/>
                 </p:submenu>
 
                 <p:submenu label="Polowanie" icon="pi pi-fw pi-calendar">
@@ -39,10 +39,10 @@
                     </p:submenu>
                 </p:submenu>
                 <p:submenu label="Odstrzał" icon="pi pi-fw pi-calendar">
-                    <p:submenu label="Edit" icon="pi pi-fw pi-pencil">
-                        <p:menuitem value="Save" icon="pi pi-fw pi-calendar-plus"/>
-                        <p:menuitem value="Delete" icon="pi pi-fw pi-calendar-minus"/>
-                    </p:submenu>
+                    
+                        <p:menuitem value="Dodaj" icon="pi pi-fw pi-calendar-plus" outcome="addCull"/>
+                        
+                    
                     <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
                         <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
                     </p:submenu>

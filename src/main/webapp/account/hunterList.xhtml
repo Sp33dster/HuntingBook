@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <h3>${msg['menu.accounts.list']}</h3>
+        <h:form id="hunterListForm">
+            <h:messages for="accountList"/>
+
+            <p:dataTable id="hunterList" var="row" value="#{huntersListPageBean.accountDataModel}">
+                <p:column id="login" headerText="${msg['account.login']}">
+                    <h:outputText value="#{row.login}" />
+                </p:column>
+                <p:column id="name" headerText="${msg['account.name']}">
+                    <h:outputText value="#{row.name}" />
+                </p:column>
+                <p:column id="surname">
+                    <f:facet name="header">${msg['account.surname']}</f:facet>
+                    <h:outputText value="#{row.surname}" />
+                </p:column>
+                <p:column id="email">
+                    <f:facet name="header">${msg['account.email']}</f:facet>
+                    <h:outputText value="#{row.email}" />
+                </p:column>
+
+                <p:column id="state" headerText="${msg['account.state']}">
+
+                    <p:selectBooleanCheckbox id="active" disabled="true" value="#{row.isActive}" />  
+                    <h:outputText value="  ${msg['account.active']}" rendered="#{row.isActive}"/>
+                    <h:outputText value="  ${msg['account.notactive']}" rendered="#{not row.isActive}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

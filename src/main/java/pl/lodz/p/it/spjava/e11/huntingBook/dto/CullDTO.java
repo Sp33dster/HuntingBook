@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 public class CullDTO {
 
     private Long id;
+    
+    @NotNull
+    private HunterDTO hunter;
 
     @NotNull(message = "{constraint.notnull}")
     private Date startDate;
@@ -19,8 +22,9 @@ public class CullDTO {
     public CullDTO() {
     }
 
-    public CullDTO(Long id, Date startDate, Date endDate, List<CullDetailsDTO> cullDetails) {
+    public CullDTO(Long id, HunterDTO hunter, Date startDate, Date endDate, List<CullDetailsDTO> cullDetails) {
         this.id = id;
+        this.hunter = hunter;
         this.startDate = startDate;
         this.endDate = endDate;
         this.cullDetails = cullDetails;
@@ -57,5 +61,15 @@ public class CullDTO {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public HunterDTO getHunter() {
+        return hunter;
+    }
+
+    public void setHunter(HunterDTO hunter) {
+        this.hunter = hunter;
+    }
+    
+    
 
 }

@@ -1,12 +1,14 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.web.cull;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDetailsDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.CullEndpoint;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.ContextUtils;
@@ -22,9 +24,10 @@ public class CullController implements Serializable {
 
     private CullDTO cullDTO;
 
-    public String add(CullDTO cull) {
+    public String add(CullDTO cull, List<CullDetailsDTO> cullDetails) {
         try {
-            cullEndpoint.addCull(cullDTO);
+            LOGGER.log(Level.INFO, "Zgłoszenie akcji addCull (" + ContextUtils.getUserAddress() + ")");
+            cullEndpoint.addCull(cullDTO, cullDetails);
             return "success";
         } catch (AppBaseException ex) {
             Logger lg = Logger.getLogger(CullController.class

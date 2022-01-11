@@ -1,11 +1,9 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.facade;
 
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-
 
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public abstract class AbstractFacade<T> {
@@ -57,5 +55,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }
