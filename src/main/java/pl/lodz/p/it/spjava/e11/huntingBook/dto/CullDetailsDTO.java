@@ -6,7 +6,7 @@ public class CullDetailsDTO {
     
     private AnimalType animal;
 
-    private int quantity;
+    private Long quantity;
 
     public AnimalType getAnimal() {
         return animal;
@@ -16,15 +16,15 @@ public class CullDetailsDTO {
         this.animal = animal;
     }
 
-    public int getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
-    public CullDetailsDTO(AnimalType animal, int quantity) {
+    public CullDetailsDTO(AnimalType animal, Long quantity) {
         this.animal = animal;
         this.quantity = quantity;
     }

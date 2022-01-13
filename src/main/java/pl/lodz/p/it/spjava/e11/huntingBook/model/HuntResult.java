@@ -20,7 +20,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 @Entity
 @Table(name = "Result")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Result extends AbstractEntity implements Serializable {
+public class HuntResult extends AbstractEntity implements Serializable {
 
     @Column(name = "is_private_use")
     private Boolean isPrivateUse;
@@ -44,15 +44,15 @@ public class Result extends AbstractEntity implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "result")
     private Hunt huntID;
 
-    public Result() {
+    public HuntResult() {
     }
 
-    public Result(Boolean isPrivateUse, TypeOfResult typeOfResult) {
+    public HuntResult(Boolean isPrivateUse, TypeOfResult typeOfResult) {
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
     }
 
-    public Result(Boolean isPrivateUse, Boolean isConfirmed, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
+    public HuntResult(Boolean isPrivateUse, Boolean isConfirmed, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
         this.isPrivateUse = isPrivateUse;
         this.isConfirmed = isConfirmed;
         this.typeOfResult = typeOfResult;

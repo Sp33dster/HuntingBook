@@ -11,9 +11,9 @@
     </ui:define>
 
     <ui:define name="main">
-        <h3>${msg['menu.accounts.list']}</h3>
+        <h3>${msg['menu.accounts.hunterlist']}</h3>
         <h:form id="hunterListForm">
-            <h:messages for="accountList"/>
+            <h:messages for="hunterListForm"/>
 
             <p:dataTable id="hunterList" var="row" value="#{huntersListPageBean.accountDataModel}">
                 <p:column id="login" headerText="${msg['account.login']}">
@@ -38,7 +38,7 @@
                     <h:outputText value="  ${msg['account.notactive']}" rendered="#{not row.isActive}"/>
                 </p:column>
                 <p:column id="actions" headerText="${msg['general.actions']}">                 
-                    <p:commandButton action="#{huntersListPageBean.getHunterToAddCull()}" value="${msg['action.deactivate']}" update="hunterList" rendered="#{row.isActive}" styleClass="rounded-button"/>         
+                    <p:commandButton action="#{huntersListPageBean.getHunterToAddCull()}" value="${msg['action.addCull']}" update="hunterList" rendered="#{row.isActive}" styleClass="rounded-button"/>         
                 </p:column>
             </p:dataTable>
         </h:form>

@@ -35,7 +35,7 @@ public class Hunt extends AbstractEntity implements Serializable {
 
     @JoinColumn(name = "result_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Result result;
+    private HuntResult result;
 
     public Hunt(Date startTime, String area, Hunter hunterId) {
         this.startTime = startTime;
@@ -61,7 +61,7 @@ public class Hunt extends AbstractEntity implements Serializable {
         this.isEnded = isEnded;
     }
 
-    public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, boolean isEnded, Result resultId) {
+    public Hunt(Date startTime, Date endTime, String area, Hunter hunterId, boolean isEnded, HuntResult resultId) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.area = area;
@@ -113,11 +113,11 @@ public class Hunt extends AbstractEntity implements Serializable {
         this.hunterId = hunterId;
     }
 
-    public Result getResult() {
+    public HuntResult getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(HuntResult result) {
         this.result = result;
     }
 

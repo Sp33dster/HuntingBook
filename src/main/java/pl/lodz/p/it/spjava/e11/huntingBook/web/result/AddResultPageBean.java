@@ -8,7 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
@@ -31,17 +31,14 @@ public class AddResultPageBean {
 
     private List<AnimalType> animalTypes;
 
-    private ResultDTO result = new ResultDTO();
+    private HuntResultDTO result = new HuntResultDTO();
 
     private HuntDTO hunt = new HuntDTO();
 
     @PostConstruct
     private void init() {
         hunt = huntController.getResultHunt();
-        types = new ArrayList<>();
-        types.add(TypeOfResult.HIT);
-        types.add(TypeOfResult.MISS);
-        types.add(TypeOfResult.NOTHING);
+        
 
         animalTypes = new ArrayList<>();
         for (AnimalType animal : AnimalType.values()) {
@@ -49,7 +46,7 @@ public class AddResultPageBean {
         }
     }
 
-    public ResultDTO getResult() {
+    public HuntResultDTO getResult() {
         return result;
     }
 

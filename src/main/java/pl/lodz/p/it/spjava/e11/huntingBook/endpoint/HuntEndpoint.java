@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
@@ -13,17 +14,16 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
 import pl.lodz.p.it.spjava.e11.huntingBook.facade.HuntFacade;
-import pl.lodz.p.it.spjava.e11.huntingBook.facade.ResultFacade;
+import pl.lodz.p.it.spjava.e11.huntingBook.facade.HuntResultFacade;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.HuntManager;
 import pl.lodz.p.it.spjava.e11.huntingBook.managers.ResultManager;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.Account;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
-import pl.lodz.p.it.spjava.e11.huntingBook.model.Result;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.HuntResult;
 import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
 
 @Stateful
@@ -33,9 +33,9 @@ public class HuntEndpoint {
 
     @Inject
     HuntFacade huntFacade;
-    
+
     @Inject
-    ResultFacade resultFacade;
+    HuntResultFacade resultFacade;
 
     @Inject
     AccountEndpoint accountEndpoint;
@@ -59,8 +59,9 @@ public class HuntEndpoint {
 
     private Hunt huntToResult;
 
-    private Result huntResult;
+    private HuntResult huntResult;
 
+    @RolesAllowed({"Hunter"})
     public void addNewHunt(HuntDTO huntDTO) throws AppBaseException {
 
         Hunt hunt = new Hunt();
@@ -91,22 +92,30 @@ public class HuntEndpoint {
         }
     }
 
+    @RolesAllowed({"Hunter"})
     public HuntDTO getHuntToEnd(HuntDTO hunt) {
         huntToEnd = huntFacade.find(hunt.getId());
         return DTOConverter.createHuntDTOFromEntity(huntToEnd);
     }
 
+    @RolesAllowed({"Hunter"})
     public HuntDTO getHuntToAddResult(HuntDTO hunt) {
         huntToResult = huntFacade.getHunt(hunt.getId());
         return DTOConverter.createHuntDTOFromEntity(huntToResult);
 
     }
-    public void endHunt(HuntDTO hunt) throws AppBaseException {
+
+    @RolesAllowed({"Hunter"})
+    public void endHunt(HuntDTO hunt, HuntResultDTO result) throws AppBaseException {
         if (huntToEnd == null) {
             throw new IllegalArgumentException("Brak wczytanego polowania do modyfikacji");
         }
+        HuntResult huntToEndResult = new HuntResult();
+        huntToEndResult.setTypeOfResult(result.getTypeOfResult());
         huntToEnd.setEndTime(hunt.getEndTime());
+        huntToEnd.setResult(huntToEndResult);
         huntToEnd.setIsEnded(Boolean.TRUE);
+        
         huntFacade.edit(huntToEnd);
         huntToEnd = null;
     }
@@ -119,21 +128,22 @@ public class HuntEndpoint {
         return DTOConverter.createHuntsDTOListFromEntity(huntFacade.getMyHunt(hunter));
     }
 
-    public void confirmResult(HuntDTO hunt) {
+    @RolesAllowed({"MOTHunter"})
+    public void confirmResult(HuntDTO hunt) throws AppBaseException{
         Hunt huntToConfirmResult = new Hunt();
-        Result result = new Result();
-        
+        HuntResult result = new HuntResult();
+
         huntToConfirmResult = huntFacade.getHunt(hunt.getId());
         result = resultFacade.find(huntToConfirmResult.getResult().getId());
-        
+
         result.setIsConfirmed(Boolean.TRUE);
-        
+
         huntToConfirmResult.setResult(result);
-        
+
         huntFacade.edit(huntToConfirmResult);
-        
+
         result = null;
         huntToConfirmResult = null;
-     }
+    }
 
 }

@@ -1,6 +1,13 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.exception;
 
+import javax.persistence.OptimisticLockException;
+import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunt;
+
 public class HuntException extends AppBaseException {
+
+    static final public String KEY_HUNT_OPTIMISTIC_LOCK = "error.account.optimisticlock";
+
+    private Hunt hunt;
 
     public HuntException(String message) {
         super(message);
@@ -15,4 +22,9 @@ public class HuntException extends AppBaseException {
         return he;
     }
 
+    public static HuntException createHuntOptimisticLockException(Hunt hunt, OptimisticLockException cause) {
+        HuntException he = new HuntException(KEY_HUNT_OPTIMISTIC_LOCK, cause);
+        he.hunt = hunt;
+        return he;
+    }
 }

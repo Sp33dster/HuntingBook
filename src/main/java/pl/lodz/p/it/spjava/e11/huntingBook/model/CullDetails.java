@@ -30,21 +30,28 @@ public class CullDetails extends AbstractEntity implements Serializable {
     @NotNull
     @Column(name = "quantity")
     @Min(value = 0)
-    private int quantity;
+    private Long quantity;
 
-    @JoinColumn(name = "cull_id", referencedColumnName = "id")
+    @JoinColumn(name = "cullid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Cull cullId;
 
     public CullDetails() {
     }
 
-    public CullDetails(Long id, AnimalType animal, int quantity, Cull cullId) {
+    public CullDetails(Long id, AnimalType animal, Long quantity, Cull cullId) {
         this.id = id;
         this.animal = animal;
         this.quantity = quantity;
         this.cullId = cullId;
     }
+
+    public CullDetails(AnimalType animal, Long quantity) {
+        this.animal = animal;
+        this.quantity = quantity;
+    }
+    
+    
 
     public AnimalType getAnimal() {
         return animal;
@@ -54,11 +61,11 @@ public class CullDetails extends AbstractEntity implements Serializable {
         this.animal = animal;
     }
 
-    public int getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

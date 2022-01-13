@@ -21,34 +21,32 @@
 
                 <p:submenu label="${msg['menu.accounts']}" icon="pi pi-fw pi-user">
                     <p:submenu label="${msg['menu.create']}" icon="pi pi-fw pi-user-plus">
-                        <p:menuitem value="${msg['HUNTER']}" outcome="createHunter"/>
-                        <p:menuitem value="${msg['MASTER_OF_THE_HUNTER']}" outcome="createMOTHunter"/>
-                        <p:menuitem value="${msg['ADMINISTRATOR']}" outcome="createAdmin"/>
+                        <p:menuitem value="${msg['HUNTER']}" rendered="#{empty request.remoteUser}" outcome="createHunter"/>
+                        <p:menuitem value="${msg['MASTER_OF_THE_HUNTER']}" rendered="#{request.isUserInRole('Administrator')}" outcome="createMOTHunter"/>
+                        <p:menuitem value="${msg['ADMINISTRATOR']}" rendered="#{request.isUserInRole('Administrator')}" outcome="createAdmin"/>
                     </p:submenu>
-                    <p:menuitem value="${msg['menu.accounts.list']}" outcome="accountsList"/>
-                    <p:menuitem value="Wyświetl listę kont myśliwych" outcome="huntersList"/>
+                    <p:menuitem value="${msg['menu.accounts.list']}" rendered="#{request.isUserInRole('Administrator')}" outcome="accountsList"/>
+                    <p:menuitem value="Wyświetl listę kont myśliwych" rendered="#{request.isUserInRole('MOTHunter')}" outcome="huntersList"/>
                 </p:submenu>
 
                 <p:submenu label="Polowanie" icon="pi pi-fw pi-calendar">
-                    
-                    <p:menuitem value="Dodaj nowe polowanie" outcome="addHunt" icon="pi pi-fw pi-calendar-plus"/>
-                        <p:menuitem value="Lista polowań" outcome="huntsList" icon="pi pi-fw pi-calendar-minus"/>
-                    
-                    <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
-                        <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
-                    </p:submenu>
+
+                    <p:menuitem value="Dodaj nowe polowanie" outcome="addHunt" rendered="#{request.isUserInRole('Hunter')}" icon="pi pi-fw pi-calendar-plus"/>
+                    <p:menuitem value="Lista polowań" outcome="huntsList" rendered="#{request.isUserInRole('Hunter')}" icon="pi pi-fw pi-calendar-minus"/>
+
                 </p:submenu>
                 <p:submenu label="Odstrzał" icon="pi pi-fw pi-calendar">
-                    
-                        <p:menuitem value="Dodaj" icon="pi pi-fw pi-calendar-plus" outcome="addCull"/>
-                        
-                    
-                    <p:submenu label="Archieve" icon="pi pi-fw pi-calendar-times">
-                        <p:menuitem value="Remove" icon="pi pi-fw pi-calendar-minus"/>
-                    </p:submenu>
+
+                    <p:menuitem value="Dodaj" icon="pi pi-fw pi-calendar-plus" rendered="#{request.isUserInRole('MOTHunter')}" outcome="addCull"/>
+                    <p:menuitem value="Pokaż mój odstrzał" rendered="#{request.isUserInRole('Hunter')}" outcome="viewMyCull" icon="pi pi-fw pi-calendar-minus"/>
+
                 </p:submenu>
 
-                <p:menuitem value="Pozyskanie" icon="pi pi-fw pi-power-off"/>
+                <p:submenu label="Pozyskanie" icon="pi pi-fw pi-power-off">
+                    <p:menuitem value="Pokaz wszystkie pozyskane" rendered="#{request.isUserInRole('MOTHunter')}" icon="pi pi-fw pi-calendar-plus" outcome="allAnimals"/>
+                    <p:menuitem value="Pokaż mój pozyskanie" rendered="#{request.isUserInRole('Hunter')}" outcome="myAnimals" icon="pi pi-fw pi-calendar-minus"/>
+
+                </p:submenu>
 
                 <f:facet name="options">
                     <p:button value="${msg['action.login']}" outcome="login" rendered="#{empty request.remoteUser}" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info"/>

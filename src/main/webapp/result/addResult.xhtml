@@ -31,21 +31,16 @@
                     <p:message for="startTime"/>
 
 
-                    <p:outputLabel value="TypeOfResult"/>
-                    <p:selectOneMenu id="typeOfResult" value="#{addResultPageBean.result.typeOfResult}" label="Always Show Label">
-                        <f:selectItems value="#{addResultPageBean.types}"/>
-                    </p:selectOneMenu>
-                    
-                    <p:outputLabel value="animalType"/>
+                    <p:outputLabel value="#{msg['hunt.animal']}"/>
                     <p:selectOneMenu id="animalType" value="#{addResultPageBean.result.animalType}" label="AnimalType">
                         <f:selectItems value="#{addResultPageBean.animalTypes}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="#{msg['hunt.animalWeight']}" for="weight" />
                     <h:inputText id="weight" value="#{addResultPageBean.result.animalWeight}" title="#{msg['hunt.area']}"/>
                     <p:message for="weight" />
-                    
+
                     <p:selectBooleanCheckbox id="privateUse" itemLabel="isPrivateUse" value="#{addResultPageBean.result.isPrivateUse}" />  
-                    
+
                 </h:panelGrid>
                 <p:commandButton action="#{addResultPageBean.addResult()}" update="grid" value="${msg['hunt.endHunt']}"/>
                 <p:divider/>

@@ -88,7 +88,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>success</from-outcome>
-            <to-view-id>/success.xhtml</to-view-id>
+            <to-view-id>/success/success.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     
@@ -98,8 +98,23 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>allAnimals</from-outcome>
+            <to-view-id>/animal/allAnimals.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>myAnimals</from-outcome>
+            <to-view-id>/animal/myAnimals.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>addCull</from-outcome>
             <to-view-id>/cull/addCull.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>viewMyCull</from-outcome>
+            <to-view-id>/cull/viewMyCull.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

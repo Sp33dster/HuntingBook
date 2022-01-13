@@ -11,6 +11,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
@@ -24,6 +25,7 @@ public class AbstractEntity implements Serializable {
 
     @NotNull
     @Column(name = "version")
+    @Version
     private int version;
 
     @Temporal(TemporalType.TIMESTAMP)

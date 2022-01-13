@@ -37,4 +37,92 @@
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping> 
+    
+    <security-constraint>
+        <display-name>HunterPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>HunterPages</web-resource-name>
+            <description/>
+            <url-pattern>/faces/cull/viewMyCull.xhtml</url-pattern>
+            <url-pattern>/faces/animal/myAnimals.xhtml</url-pattern>   
+            <url-pattern>/faces/hunt/addHunt.xhtml</url-pattern>
+            <url-pattern>/faces/hunt/endHunt.xhtml</url-pattern>
+            <url-pattern>/faces/result/addResult.xhtml</url-pattern>    
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Hunter</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>AdminPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>AdminPages</web-resource-name>
+            <description/>
+            <url-pattern>/faces/account/accountsList.xhtml</url-pattern>
+            <url-pattern>/faces/account/changePassword.xhtml</url-pattern>   
+            <url-pattern>/faces/account/createAdmin.xhtml</url-pattern>
+            <url-pattern>/faces/account/createMOTHunter.xhtml</url-pattern>    
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>MOTHunterPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>MOTHunterPages</web-resource-name>
+            <description/>
+            <url-pattern>/faces/cull/addCull.xhtml</url-pattern>
+            <url-pattern>/faces/animal/allAnimals.xhtml</url-pattern>   
+            <url-pattern>/faces/account/hunterList.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>MOTHunter</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>HTTPSPages</display-name>
+        <web-resource-collection>
+            <web-resource-name>ALLPages</web-resource-name>
+            <description/>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    
+    <security-role>
+        <description/>
+        <role-name>Hunter</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>MOTHunter</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Administrator</role-name>
+    </security-role>
+    
+    <error-page>
+        <error-code>403</error-code>
+        <location>/faces/error/error403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/error/error404.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/faces/error/error.xhtml</location>
+    </error-page>
 </web-app>

@@ -19,7 +19,7 @@
 
             <p:messages id="messages" showDetail="true"/>
 
-            <p:panelGrid columns="2">
+            <p:panelGrid columns="3">
                 <h:outputLabel for="login" value="#{msg['account.login']}"/>
                 <p:inputText id="login" value="#{loginController.username}"/>
                 <p:message for="login"/>
@@ -28,7 +28,7 @@
                 <p:password id="password" value="#{loginController.password}"/>
                 <p:message for="password"/>
                 <f:facet name="footer">
-                    <p:commandButton value="${msg['action.login']}" type="submit" action="#{loginController.login()}" styleClass="ui-priority-primary"/>
+                    <p:commandButton value="${msg['action.login']}" update="form" type="submit" action="#{loginController.login()}" styleClass="ui-priority-primary"/>
                 </f:facet>
             </p:panelGrid>
         </h:form>

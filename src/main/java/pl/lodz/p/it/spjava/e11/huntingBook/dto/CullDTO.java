@@ -30,6 +30,27 @@ public class CullDTO {
         this.cullDetails = cullDetails;
     }
 
+    public CullDTO(Date startDate, Date endDate, List<CullDetailsDTO> cullDetails) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.cullDetails = cullDetails;
+    }
+
+    public CullDTO(HunterDTO hunter, Date startDate, Date endDate, List<CullDetailsDTO> cullDetails) {
+        this.hunter = hunter;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.cullDetails = cullDetails;
+    }
+
+    public CullDTO(Date startDate, Date endDate) {
+        
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+    
+    
+    
     public List<CullDetailsDTO> getCullDetails() {
         return cullDetails;
     }

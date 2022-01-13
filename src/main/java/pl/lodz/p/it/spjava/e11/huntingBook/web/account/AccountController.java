@@ -47,7 +47,6 @@ public class AccountController implements Serializable {
         return hunterToAddCull;
     }
 
-    
     public String createHunter(HunterDTO hunterDTO) {
         try {
             LOG.log(Level.INFO, "Zgłoszenie akcji createHunter (" + ContextUtils.getUserAddress() + ")");
@@ -58,6 +57,8 @@ public class AccountController implements Serializable {
         } catch (AccountException ae) {
             if (AccountException.KEY_DB_CONSTRAINT.equals(ae.getMessage())) {
                 ContextUtils.emitInternationalizedMessage("login", AccountException.KEY_DB_CONSTRAINT);
+            } else if (AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK.equals(ae.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK);
             } else {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createHunter wyjątku: ", ae);
             }
@@ -66,6 +67,8 @@ public class AccountController implements Serializable {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createHunter wyjątku typu: ", abe.getClass());
             if (ContextUtils.isInternationalizationKeyExist(abe.getMessage())) {
                 ContextUtils.emitInternationalizedMessage(null, abe.getMessage());
+            } else if (AccountException.KEY_ACCOUNT_EMAIL_EXISTS.equals(abe.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_EMAIL_EXISTS);
             }
             return null;
         }
@@ -83,6 +86,8 @@ public class AccountController implements Serializable {
         } catch (AccountException ae) {
             if (AccountException.KEY_DB_CONSTRAINT.equals(ae.getMessage())) {
                 ContextUtils.emitInternationalizedMessage("login", AccountException.KEY_DB_CONSTRAINT);
+            } else if (AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK.equals(ae.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK);
             } else {
                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createAdministrator wyjątku: ", ae);
             }
@@ -91,6 +96,8 @@ public class AccountController implements Serializable {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createAdministrator wyjątku typu: ", abe.getClass());
             if (ContextUtils.isInternationalizationKeyExist(abe.getMessage())) {
                 ContextUtils.emitInternationalizedMessage(null, abe.getMessage());
+            } else if (AccountException.KEY_ACCOUNT_EMAIL_EXISTS.equals(abe.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_EMAIL_EXISTS);
             }
             return null;
         }
@@ -98,7 +105,7 @@ public class AccountController implements Serializable {
 
     String createMasterOfTheHunter(MasterOfTheHunterDTO masterOfTheHunterDTO) {
         try {
-            LOG.log(Level.INFO, "Zgłoszenie akcji createAdministrator (" + ContextUtils.getUserAddress() + ")");
+            LOG.log(Level.INFO, "Zgłoszenie akcji createMOHunter (" + ContextUtils.getUserAddress() + ")");
 
             accountEndpoint.createAccount(masterOfTheHunterDTO);
 
@@ -106,14 +113,18 @@ public class AccountController implements Serializable {
         } catch (AccountException ae) {
             if (AccountException.KEY_DB_CONSTRAINT.equals(ae.getMessage())) {
                 ContextUtils.emitInternationalizedMessage("login", AccountException.KEY_DB_CONSTRAINT);
+            } else if (AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK.equals(ae.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK);
             } else {
-                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createAdministrator wyjątku: ", ae);
+                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createMOHunter wyjątku: ", ae);
             }
             return null;
         } catch (AppBaseException abe) {
-            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createAdministrator wyjątku typu: ", abe.getClass());
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createMOHunter wyjątku typu: ", abe.getClass());
             if (ContextUtils.isInternationalizationKeyExist(abe.getMessage())) {
                 ContextUtils.emitInternationalizedMessage(null, abe.getMessage());
+            } else if (AccountException.KEY_ACCOUNT_EMAIL_EXISTS.equals(abe.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_EMAIL_EXISTS);
             }
             return null;
         }
@@ -148,9 +159,27 @@ public class AccountController implements Serializable {
         return "deleteSuccess";
     }
 
-    public void activateAccount(AccountDTO accountDTO) {
-        accountEndpoint.activateAccount(accountDTO);
-        ContextUtils.emitSuccessMessage(AccountsListPageBean.GENERAL_MSG_ID);
+    public void activateAccount(AccountDTO accountDTO) throws AppBaseException {
+
+        try {
+            LOG.log(Level.INFO, "Zgłoszenie akcji activateAccount (" + ContextUtils.getUserAddress() + ")");
+
+            accountEndpoint.activateAccount(accountDTO);
+            ContextUtils.emitSuccessMessage(AccountsListPageBean.GENERAL_MSG_ID);
+        }  catch (AccountException ae) {
+            if (AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK.equals(ae.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, AccountException.KEY_ACCOUNT_OPTIMISTIC_LOCK);
+            } else {
+                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createMOHunter wyjątku: ", ae);
+            }
+            
+            } catch (AppBaseException abe) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji createMOHunter wyjątku typu: ", abe.getClass());
+            if (ContextUtils.isInternationalizationKeyExist(abe.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, abe.getMessage());
+            }
+            
+        }
     }
 
     public void deactivateAccount(AccountDTO accountDTO) {

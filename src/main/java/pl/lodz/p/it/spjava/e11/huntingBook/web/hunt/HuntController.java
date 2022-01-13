@@ -8,6 +8,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.HuntEndpoint;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.HuntException;
@@ -23,7 +24,7 @@ public class HuntController implements Serializable {
     private HuntEndpoint huntEndpoint;
 
     private HuntDTO endHunt;
-    
+
     private HuntDTO resultHunt;
 
     public HuntDTO getEndHunt() {
@@ -33,7 +34,7 @@ public class HuntController implements Serializable {
     public HuntDTO getResultHunt() {
         return resultHunt;
     }
- 
+
     public String addNewHunt(HuntDTO hunt) {
         try {
             huntEndpoint.addNewHunt(hunt);
@@ -50,8 +51,8 @@ public class HuntController implements Serializable {
             return null;
         }
     }
-   
-    public String getHuntToAddResult(HuntDTO hunt){
+
+    public String getHuntToAddResult(HuntDTO hunt) {
         resultHunt = huntEndpoint.getHuntToAddResult(hunt);
         return "addResult";
     }
@@ -65,14 +66,30 @@ public class HuntController implements Serializable {
         return huntEndpoint.getMyHunts();
     }
 
-    public String endHunt(HuntDTO hunt) throws AppBaseException {
-        huntEndpoint.endHunt(hunt);
+    public String endHunt(HuntDTO hunt, HuntResultDTO result) throws AppBaseException {
+        huntEndpoint.endHunt(hunt, result);
         return "successHunt";
     }
 
     public void confirmResult(HuntDTO hunt) {
-        huntEndpoint.confirmResult(hunt);
-        //TODO emitSuccessMessage();
-    }
+        try {
+            LOGGER.log(Level.INFO, "Zgłoszenie akcji confirmHunt (" + ContextUtils.getUserAddress() + ")");
 
+            huntEndpoint.confirmResult(hunt);
+            
+        } catch (HuntException he) {
+            if (HuntException.KEY_HUNT_OPTIMISTIC_LOCK.equals(he.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, HuntException.KEY_HUNT_OPTIMISTIC_LOCK);
+            } else {
+                LOGGER.log(Level.SEVERE, "Zgłoszenie w metodzie akcji confirmResult wyjątku: ", he);
+            }
+        } catch (AppBaseException abe) {
+            LOGGER.log(Level.SEVERE, "Zgłosznenie w metodzie akcji confirmResult wyjątku typu: ", abe.getClass());
+            if (ContextUtils.isInternationalizationKeyExist(abe.getMessage())) {
+                ContextUtils.emitInternationalizedMessage(null, abe.getMessage());
+            }
+
+        }
+
+    }
 }

@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
-import pl.lodz.p.it.spjava.e11.huntingBook.web.result.ResultController;
 
 @Named
 @ViewScoped

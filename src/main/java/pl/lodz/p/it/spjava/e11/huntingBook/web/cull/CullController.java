@@ -40,4 +40,8 @@ public class CullController implements Serializable {
         }
     }
 
+    public CullDTO getMyCull() {
+        return cullEndpoint.getMyCull();
+    }
+
 }

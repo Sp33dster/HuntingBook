@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.AnimalType;
 import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 
-public class ResultDTO {
+public class HuntResultDTO {
 
     private Long id;
 
@@ -19,16 +19,16 @@ public class ResultDTO {
 
     private Boolean isConfirmed;
 
-    public ResultDTO() {
+    public HuntResultDTO() {
     }
 
-    public ResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult) {
+    public HuntResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult) {
         this.id = id;
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
     }
     
-    public ResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
+    public HuntResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight) {
         this.id = id;
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;
@@ -36,7 +36,7 @@ public class ResultDTO {
         this.animalWeight = animalWeight;
     }
 
-    public ResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight, Boolean isConfirmed) {
+    public HuntResultDTO(Long id, Boolean isPrivateUse, TypeOfResult typeOfResult, AnimalType animalType, int animalWeight, Boolean isConfirmed) {
         this.id = id;
         this.isPrivateUse = isPrivateUse;
         this.typeOfResult = typeOfResult;

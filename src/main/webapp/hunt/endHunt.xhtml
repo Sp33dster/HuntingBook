@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="../templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="top">
         <ui:include src="../templates/menu.xhtml"/>
     </ui:define>
@@ -15,14 +16,14 @@
             <p:messages id="messages" showDetail="true" closable="true">
                 <p:autoUpdate/>
             </p:messages>
-            
+
             <h3>${msg['menu.hunt.end']}</h3>
 
             <h:form id="endHuntForm">
-               
+
                 <h:panelGrid id="grid" columns="3" cellpadding="7">
 
-                    
+
                     <p:outputLabel value="#{msg['hunt.area']}" for="area" />
                     <h:outputText id="area" value="#{endHuntPageBean.hunt.area}" title="#{msg['hunt.area']}"/>
                     <p:message for="area" />
@@ -32,6 +33,11 @@
                     <p:outputLabel for="endTime" value="#{msg['hunt.end']}"/>
                     <p:datePicker id="endTime" value="#{endHuntPageBean.hunt.endTime}" showTime="true"/>
                     <p:message for="endTime"/>
+
+                    <p:outputLabel value="TypeOfResult"/>
+                    <p:selectOneMenu id="typeOfResult" value="#{endHuntPageBean.result.typeOfResult}" label="Always Show Label">
+                        <f:selectItems value="#{endHuntPageBean.types}"/>
+                    </p:selectOneMenu>
 
                 </h:panelGrid>
                 <br/>

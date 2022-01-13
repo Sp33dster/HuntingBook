@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
@@ -94,6 +95,7 @@ public class AccountEndpoint {
     }
 
     @TransactionAttribute(TransactionAttributeType.NEVER)
+    @RolesAllowed({"Administrator"})
     public void createAccount(AdministratorDTO administratorDTO) throws AppBaseException {
         Administrator administrator = new Administrator();
         rewriteDataToNewAccount(administratorDTO, administrator);
@@ -124,6 +126,7 @@ public class AccountEndpoint {
     }
 
     @TransactionAttribute(TransactionAttributeType.NEVER)
+    @RolesAllowed({"Administrator"})
     public void createAccount(MasterOfTheHunterDTO masterOfTheHunterDTO) throws AppBaseException {
         MasterOfTheHunter motHunter = new MasterOfTheHunter();
         rewriteDataToNewAccount(masterOfTheHunterDTO, motHunter);
@@ -198,6 +201,7 @@ public class AccountEndpoint {
         accountToEdit = null;
     }
 
+    @RolesAllowed({"Administrator"})
     public void deleteAccount(AccountDTO accountDTO) {
         accountToDelete = accountFacade.findLogin(accountDTO.getLogin());
         accountFacade.remove(accountToDelete);
@@ -219,16 +223,19 @@ public class AccountEndpoint {
         account.setEmail(accountDTO.getEmail());
     }
 
-    public void activateAccount(AccountDTO accountDTO) {
+    @RolesAllowed({"Administrator"})
+    public void activateAccount(AccountDTO accountDTO) throws AppBaseException{
         Account account = accountFacade.find(accountDTO.getId());
         account.setIsActive(true);
     }
 
+    @RolesAllowed({"Administrator"})
     public void deactivateAccount(AccountDTO accountDTO) {
         Account account = accountFacade.find(accountDTO.getId());
         account.setIsActive(false);
     }
 
+    @RolesAllowed({"Administrator"})
     public void changePassword(AccountDTO accountDTO, String password) {
         Account account = accountFacade.find(accountDTO.getId());
         account.setPassword(generator.generateHash(password));
@@ -262,6 +269,7 @@ public class AccountEndpoint {
         return accountFacade.findHunterLogin(getMyLogin());
     }
 
+    @RolesAllowed({"MOTHunter"})
     public List<AccountDTO> getActiveHuntersList() {
         return DTOConverter.createAccountDTOListFromEntity(accountFacade.findActiveHunters());
     }
@@ -270,6 +278,7 @@ public class AccountEndpoint {
         return DTOConverter.createAccountDTOListFromEntity(accountFacade.findHunters());
     }
 
+    @RolesAllowed({"MOTHunter"})
     public AccountDTO getHunterToAddCull(AccountDTO hunter) {
         return DTOConverter.createAccountDTOFromEntity(accountFacade.find(hunter.getId()));
     }

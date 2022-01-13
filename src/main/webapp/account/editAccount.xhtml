@@ -17,7 +17,7 @@
     <ui:define name="main">
         <h3>${msg['menu.accounts.edit']}</h3>
         <h:form>
-            <h:panelGrid columns="3">
+            <h:panelGrid id="grid" columns="3">
 
                 <ui:include src="_templateLoginView.xhtml"/>
 
@@ -40,15 +40,15 @@
             <br />
 
             <c:if test="#{editAccountPageBean.hunter}">
-                <p:commandButton action="#{editAccountPageBean.saveHunterAfterEdit()}" value="#{msg['action.account.edit']}" />
+                <p:commandButton action="#{editAccountPageBean.saveHunterAfterEdit()}" update="grid" value="#{msg['action.account.edit']}" />
             </c:if>
 
             <c:if test="#{editAccountPageBean.masterOfTheHunter}">
-                <p:commandButton action="#{editAccountPageBean.saveMasterOfTheHunterAfterEdit()}" value="#{msg['action.account.edit']}" />
+                <p:commandButton action="#{editAccountPageBean.saveMasterOfTheHunterAfterEdit()}" update="grid" value="#{msg['action.account.edit']}" />
             </c:if>
 
             <c:if test="#{editAccountPageBean.administrator}">
-                <p:commandButton action="#{editAccountPageBean.saveAdministratorAfterEdit()}" value="#{msg['action.account.edit']}" />
+                <p:commandButton action="#{editAccountPageBean.saveAdministratorAfterEdit()}" update="grid" value="#{msg['action.account.edit']}" />
             </c:if>
             
             <br />

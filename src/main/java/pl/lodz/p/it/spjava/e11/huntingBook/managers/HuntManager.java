@@ -1,6 +1,7 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.managers;
 
 import javax.ejb.LocalBean;
+import javax.ejb.SessionSynchronization;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -14,7 +15,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.Hunter;
 @Stateful
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class HuntManager extends AbstractManager {
+public class HuntManager extends AbstractManager implements SessionSynchronization{
 
     @Inject
     HuntFacade huntFacade;

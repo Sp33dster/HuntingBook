@@ -2,24 +2,17 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns="http://www.w3.org/1999/xhtml"
-                template="/templates/MainTemplate.xhtml"
+                template="../templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="top">
         <ui:include src="../templates/menu.xhtml"/>
     </ui:define>
 
     <ui:define name="main">
-        <div class="card">
-            <p:tooltip/>
-            <p:messages id="messages" showDetail="true" closable="true">
-                <p:autoUpdate/>
-            </p:messages>
 
-            <h3>
-                The account has been deleted successfully
-            </h3>
+        <div>
+            <center>#{msg["error.page.message"]}</center>
         </div>
     </ui:define>
 

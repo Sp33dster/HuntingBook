@@ -1,11 +1,13 @@
 package pl.lodz.p.it.spjava.e11.huntingBook.web.result;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.CullDetailsDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntDTO;
-import pl.lodz.p.it.spjava.e11.huntingBook.dto.ResultDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.dto.HuntResultDTO;
 import pl.lodz.p.it.spjava.e11.huntingBook.endpoint.ResultEndpoint;
 import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 
@@ -16,12 +18,21 @@ public class ResultController implements Serializable {
 
     @Inject
     private ResultEndpoint resultEndpoint;
+    private List<CullDetailsDTO> allAnimals;
 
-    private ResultDTO huntResult;
+    private HuntResultDTO huntResult;
 
-    public String addHuntResult(HuntDTO hunt, ResultDTO result) throws AppBaseException {
+    public String addHuntResult(HuntDTO hunt, HuntResultDTO result) throws AppBaseException {
         resultEndpoint.addHuntResult(hunt, result);
         return "success";
+    }
+
+    public List<CullDetailsDTO> getAllAnimals() {
+        return resultEndpoint.getAllAnimals();
+        }
+
+    public List<CullDetailsDTO> getMyAnimals() {
+        return resultEndpoint.getMyAnimals();
     }
 
 }

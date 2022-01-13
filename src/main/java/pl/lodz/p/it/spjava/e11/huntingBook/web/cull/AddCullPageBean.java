@@ -41,10 +41,12 @@ public class AddCullPageBean implements Serializable {
     private void init() {
         hunter = hunterController.getHunterToAddCull();
 
-//        activeHunters = hunterController.getActiveHuntersList();
         for (AnimalType animal : AnimalType.values()) {
-            cullDetails.add(new CullDetailsDTO(animal, 0));
+            cullDetails.add(new CullDetailsDTO(animal, 0L));
         }
+//        for (AnimalType animal : AnimalType.values()){
+//            animalTypes.add(animal);
+//        }
 
     }
 
@@ -97,7 +99,7 @@ public class AddCullPageBean implements Serializable {
     }
 
     public void onAddNew() {
-        CullDetailsDTO cullDetail = new CullDetailsDTO(AnimalType.ROE_DEER_CALF, 2);
+        CullDetailsDTO cullDetail = new CullDetailsDTO(AnimalType.ROE_DEER_CALF, 2L);
         cullDetails.add(cullDetail);
     }
 

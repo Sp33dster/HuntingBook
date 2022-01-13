@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="top">
+        <ui:include src="../templates/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="main">
+        <h3>${msg['menu.hunt.viewMyCull']}</h3>
+        <h:form id="myCullListForm">
+            <h:messages for="myCullListForm"/>
+            
+            <div class="p-field p-col-12 p-md-4">
+                <p:outputLabel for="startDate" value="#{msg['cull.start']} "/>
+                <h:outputText id="startDate" value="#{viewMyCullPageBean.cull.startDate}" />
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+                <p:outputLabel for="endDate" value="#{msg['cull.end']} "/>
+                <h:outputText id="endDate" value="#{viewMyCullPageBean.cull.endDate}" />
+            </div>
+
+            <p:dataTable id="cullDetails" var="row" value="#{viewMyCullPageBean.cull.cullDetails}">
+                <p:column id="animal" headerText="${msg['animal.species']}">
+                    <h:outputText value="#{row.animal}" />
+                </p:column>
+                <p:column id="startTime" headerText="${msg['animal.quantity']}">
+                    <h:outputText value="#{row.quantity}" />
+                </p:column>
+                
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

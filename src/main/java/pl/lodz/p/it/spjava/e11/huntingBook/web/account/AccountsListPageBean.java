@@ -9,24 +9,24 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.spjava.e11.huntingBook.dto.AccountDTO;
+import pl.lodz.p.it.spjava.e11.huntingBook.exception.AppBaseException;
 
 @ViewScoped
 @Named
 public class AccountsListPageBean implements Serializable {
 
     static final String GENERAL_MSG_ID = "accountListForm:accountList";
-    
+
     @Inject
     private AccountController accountController;
 
     private List<AccountDTO> accounts;
-    
+
     private DataModel<AccountDTO> accountDataModel;
 
     public DataModel<AccountDTO> getAccountDataModel() {
         return accountDataModel;
     }
-            
 
     private String searchByLogin = "";
     private String searchByEmail = "";
@@ -80,7 +80,7 @@ public class AccountsListPageBean implements Serializable {
         return accountController.deleteAccount(accountDataModel.getRowData());
     }
 
-    public void activateAccount() {
+    public void activateAccount() throws AppBaseException {
         accountController.activateAccount(accountDataModel.getRowData());
         initModel();
     }
