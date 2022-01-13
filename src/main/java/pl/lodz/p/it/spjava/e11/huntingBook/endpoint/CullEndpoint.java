@@ -30,7 +30,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
 @Stateful
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class CullEndpoint {
+public class CullEndpoint extends AbstractEndpoint {
 
     @Inject
     CullManager cullManager;
@@ -63,20 +63,20 @@ public class CullEndpoint {
         cull.setStartDate(cullDTO.getStartDate());
         cull.setEndDate(cullDTO.getEndDate());
         for (CullDetailsDTO cullDetailDTO : cullDetailsDTO) {
-            if(cullDetailDTO.getQuantity() != 0){
-            CullDetails cullDetail = new CullDetails();
-            cullDetail.setAnimal(cullDetailDTO.getAnimal());
-            cullDetail.setQuantity(cullDetailDTO.getQuantity());
-            cullDetail.setCullId(cull);
+            if (cullDetailDTO.getQuantity() != 0) {
+                CullDetails cullDetail = new CullDetails();
+                cullDetail.setAnimal(cullDetailDTO.getAnimal());
+                cullDetail.setQuantity(cullDetailDTO.getQuantity());
+                cullDetail.setCullId(cull);
 
-            cullDetailsList.add(cullDetail);
+                cullDetailsList.add(cullDetail);
             }
         }
 
         cull.setCullDetails(cullDetailsList);
 
         hunter.setCullId(cull);
-        
+
         boolean rollbackTX;
         int retryTXCounter = txRetryLimit;
 

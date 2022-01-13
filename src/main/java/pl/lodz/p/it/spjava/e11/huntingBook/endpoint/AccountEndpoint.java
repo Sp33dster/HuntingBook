@@ -33,7 +33,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.security.SHA256HashGenerator;
 @Stateful
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @LocalBean
-public class AccountEndpoint {
+public class AccountEndpoint extends AbstractEndpoint{
 
     @Inject
     private AccountManager accountManager;

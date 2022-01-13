@@ -29,7 +29,7 @@ import pl.lodz.p.it.spjava.e11.huntingBook.web.utils.DTOConverter;
 @Stateful
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class HuntEndpoint {
+public class HuntEndpoint extends AbstractEndpoint {
 
     @Inject
     HuntFacade huntFacade;
@@ -115,7 +115,7 @@ public class HuntEndpoint {
         huntToEnd.setEndTime(hunt.getEndTime());
         huntToEnd.setResult(huntToEndResult);
         huntToEnd.setIsEnded(Boolean.TRUE);
-        
+
         huntFacade.edit(huntToEnd);
         huntToEnd = null;
     }
@@ -129,7 +129,7 @@ public class HuntEndpoint {
     }
 
     @RolesAllowed({"MOTHunter"})
-    public void confirmResult(HuntDTO hunt) throws AppBaseException{
+    public void confirmResult(HuntDTO hunt) throws AppBaseException {
         Hunt huntToConfirmResult = new Hunt();
         HuntResult result = new HuntResult();
 

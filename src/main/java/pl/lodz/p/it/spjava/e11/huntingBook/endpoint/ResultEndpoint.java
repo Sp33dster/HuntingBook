@@ -28,11 +28,11 @@ import pl.lodz.p.it.spjava.e11.huntingBook.model.enums.TypeOfResult;
 @Stateful
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class ResultEndpoint {
+public class ResultEndpoint extends AbstractEndpoint {
 
     @Inject
     HuntResultFacade resultFacade;
-    
+
     @Inject
     AccountEndpoint accountEndpoint;
 
@@ -55,7 +55,6 @@ public class ResultEndpoint {
 
     private HuntResult huntResult;
 
-    
     @RolesAllowed({"Hunter"})
     public void addHuntResult(HuntDTO hunt, HuntResultDTO resultDTO) throws AppBaseException {
         Hunt huntToAddResult = new Hunt();
@@ -63,9 +62,9 @@ public class ResultEndpoint {
         HuntResult result = new HuntResult();
 
         huntToAddResult = huntFacade.find(hunt.getId());
-             
+
         result = resultFacade.find(huntToAddResult.getResult().getId());
-        
+
         result.setTypeOfResult(resultDTO.getTypeOfResult());
         if (resultDTO.getTypeOfResult().equals(TypeOfResult.HIT)) {
             result.setAnimalType(resultDTO.getAnimalType());
@@ -89,7 +88,7 @@ public class ResultEndpoint {
 
             allAnimals.add(new CullDetailsDTO(animal, resultFacade.countAnimal(animal)));
         }
-        
+
         return allAnimals;
 
     }
@@ -97,22 +96,22 @@ public class ResultEndpoint {
     @RolesAllowed({"Hunter"})
     public List<CullDetailsDTO> getMyAnimals() {
         Hunter hunter = accountEndpoint.getMyHunterAccount();
-       List<Hunt> myHunts = huntFacade.getMyHunt(hunter);
-       List<AnimalType> animalTypes = new ArrayList<>();
-       for(Hunt hunt : myHunts){
-         HuntResult result =  resultFacade.find(hunt.getResult().getId());
-         if(result.getAnimalType() != null){
-             animalTypes.add(result.getAnimalType());
-         }
-       }
-       
-       List<CullDetailsDTO> allAnimals = new ArrayList<>();
-       for(AnimalType animal : animalTypes){
-           allAnimals.add(new CullDetailsDTO(animal, 1L));
-       }
-       
-       return allAnimals;
-       
+        List<Hunt> myHunts = huntFacade.getMyHunt(hunter);
+        List<AnimalType> animalTypes = new ArrayList<>();
+        for (Hunt hunt : myHunts) {
+            HuntResult result = resultFacade.find(hunt.getResult().getId());
+            if (result.getAnimalType() != null) {
+                animalTypes.add(result.getAnimalType());
+            }
+        }
+
+        List<CullDetailsDTO> allAnimals = new ArrayList<>();
+        for (AnimalType animal : animalTypes) {
+            allAnimals.add(new CullDetailsDTO(animal, 1L));
+        }
+
+        return allAnimals;
+
     }
 
 }
